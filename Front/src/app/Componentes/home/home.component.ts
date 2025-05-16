@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { UsuarioComponent } from "../usuario/usuario.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [UsuarioComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

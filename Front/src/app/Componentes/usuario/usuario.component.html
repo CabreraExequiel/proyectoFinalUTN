@@ -1,0 +1,33 @@
+
+
+
+
+<!-- Formulario para crear nuevo usuario -->
+<h3>Crear nuevo usuario</h3>
+<form (ngSubmit)="crear()" #usuarioForm="ngForm">
+  <input
+    type="text"
+    name="nombre"
+    [(ngModel)]="nuevoUsuario.nombre"
+    placeholder="Nombre"
+    required
+  />
+  <input
+    type="text"
+    name="apellido"
+    [(ngModel)]="nuevoUsuario.apellido"
+    placeholder="Apellido"
+    required
+  />
+  <button type="submit" [disabled]="usuarioForm.invalid">Crear</button>
+</form>
+
+<!-- Lista de usuarios -->
+ <h3>Lista de usuarios</h3>
+<ul *ngIf="usuarios.length > 0; else noUsuarios">
+  <li *ngFor="let u of usuarios">{{ u.nombre }}, {{ u.apellido }}</li>
+</ul>
+
+<ng-template #noUsuarios>
+  <p>No hay usuarios registrados.</p>
+</ng-template>
