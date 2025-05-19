@@ -1,1 +1,47 @@
-<app-usuario></app-usuario>
+<!-- Navbar superior -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">ShareTeam</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Cerrar sesión</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenedor principal -->
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="bg-black text-white p-3" style="width: 250px; min-height: 100vh;">
+    <h5>Menú</h5>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link text-white" href="#">Football</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" href="#">Running</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" href="#">Basketball</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Contenido -->
+  <div class="p-4 flex-grow-1">
+    
+    <app-usuario></app-usuario>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+/* Ocupa toda la pantalla */
+.landing-container {
+  display: flex;
+  height: 100vh; /* 100% del alto de la ventana */
+  width: 100vw;
+}
+
+/* Sección izquierda: Formulario */
+.left-section {
+  flex: 1;
+  background-color: #000; /* Negro */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.left-section form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  gap: 15px;
+}
+
+.left-section input,
+.left-section button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+}
+
+.left-section input {
+  background-color: #222;
+  color: #fff;
+}
+
+.left-section button {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+}
+
+.left-section a {
+  color: red;
+  text-decoration: none;
+}
+
+/* Sección derecha: Imagen y descripción */
+.right-section {
+  flex: 1;
+  background-image: url('https://img.freepik.com/foto-gratis/corredores-entrenando-al-aire-libre_1098-3693.jpg?ga=GA1.1.1059346766.1745870724&semt=ais_hybrid&w=740'); /* Cambiá por el nombre real */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  text-align: center;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: brightness(0.5); /* oscurece un poco el fondo */
+}
+
+
+.right-section img {
+  width: 60%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
