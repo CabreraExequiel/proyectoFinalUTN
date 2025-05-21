@@ -17,14 +17,18 @@ public class Usuario {
         private long id;
         private String nombre;
         private String apellido;
+        private  String correo;
+        private String password;
 
 
         private Usuario(){}
 
-        private Usuario(Long id, String nombre, String apellido){
+        private Usuario(Long id, String nombre, String apellido, String correo, String password){
             this.id = id;
             this.nombre = nombre;
             this.apellido = apellido;
+            this.correo = correo;
+            this.password = password;
         }
     }
 

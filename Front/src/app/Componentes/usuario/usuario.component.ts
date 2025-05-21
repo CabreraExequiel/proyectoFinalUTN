@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from '../../Servicios/service.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-usuario',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,HttpClientModule],
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css']
 })

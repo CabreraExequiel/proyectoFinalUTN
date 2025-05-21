@@ -2,12 +2,12 @@
     position: relative;
     overflow: hidden;
   }
-
   .futbol-fondo {
     position: absolute;
     top: 0;
     left: 0;
-   
+    background-size: contain;
+    
     object-fit: cover;
     z-index: -1;
      /* opcional: para que no distraiga */

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { UsuarioComponent } from "../usuario/usuario.component";
-import { FootballComponent } from '../football/football.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [UsuarioComponent,FootballComponent],
+  imports: [ CommonModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UsuarioService } from '../../Servicios/service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-   imports: [CommonModule, FormsModule],
+   imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
@@ -18,13 +20,33 @@ export class LandingPageComponent {
     password: ''
   };
 
-  constructor(private http: HttpClient) {}
+  nuevoUsuario = { nombre: '', apellido: '', correo: '', password: '' };
 
-  onRegister() {
-    this.http.post('http://localhost:8080/api/auth/register', this.user)
-      .subscribe({
-        next: res => alert('Registro exitoso'),
-        error: err => alert('Error al registrar: ' + err.error.message)
+  usuarios: { nombre: string; apellido: string; correo: string; password: string }[] = [];
+
+  constructor(private usuarioService: UsuarioService, private router: Router, private httpClient: HttpClient) {}
+  
+  
+  ngOnInit() {
+    this.obtenerUsuarios();
+  }
+
+  obtenerUsuarios() {
+    this.usuarioService.verUsuarios().subscribe(data => {
+      this.usuarios = data;
+    });
+  }
+
+  crear() {
+    if (this.nuevoUsuario.nombre.trim() !== '') {
+      this.usuarioService.crearUsuario(this.nuevoUsuario).subscribe(() => {
+        this.obtenerUsuarios();
+        this.nuevoUsuario.nombre = '';
+        this.nuevoUsuario.apellido = '';
+        this.nuevoUsuario.correo = '';
+        this.nuevoUsuario.password = '';
       });
+    }
+    this.router.navigate(['/home'])
   }
 }

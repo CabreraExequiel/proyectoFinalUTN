@@ -28,13 +28,13 @@
     <h5>Menú</h5>
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link text-white" href="#">Football</a>
+        <a class="nav-link text-white" routerLink="/home/football">Football</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white" href="#">Running</a>
+        <a class="nav-link text-white" routerLink="/home/run">Running</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white" href="#">Basketball</a>
+        <a class="nav-link text-white" routerLink="/home/basket">Basketball</a>
       </li>
     </ul>
   </div>
@@ -45,6 +45,6 @@
   <!-- Contenido -->
   <div class="p-4 flex-grow-1">
     
-    <app-football></app-football>
+    <router-outlet></router-outlet> 
   </div>
 </div>

@@ -1,18 +1,18 @@
 <div class="landing-container">
-  <!-- Lado izquierdo: Formulario -->
+ 
   <div class="left-section">
     <h2>Registrarse</h2>
-    <form>
-      <input type="text" placeholder="Nombre" [(ngModel)]="user.nombre" name="nombre">
-      <input type="text" placeholder="Apellido" [(ngModel)]="user.apellido" name="apellido">
-      <input type="email" placeholder="Correo" [(ngModel)]="user.correo" name="correo">
-      <input type="password" placeholder="Contraseña" [(ngModel)]="user.password" name="password">
-      <button type="submit">Registrarse</button>
-    </form>
+    <form (ngSubmit)="crear()" #form="ngForm">
+  <input type="text" placeholder="Nombre" [(ngModel)]="nuevoUsuario.nombre" name="nombre" required>
+  <input type="text" placeholder="Apellido" [(ngModel)]="nuevoUsuario.apellido" name="apellido" required>
+  <input type="email" placeholder="Correo" [(ngModel)]="nuevoUsuario.correo" name="correo" required>
+  <input type="password" placeholder="Contraseña" [(ngModel)]="nuevoUsuario.password" name="password" required>
+  <button type="submit">Registrarse</button>
+</form>
+
     <p>¿Ya tienes cuenta? <a href="#">Iniciar sesión</a></p>
   </div>
 
-  <!-- Lado derecho: Imagen y descripción -->
   <div class="right-section">
     <h1>ShareTeam</h1>
     <p>ShareTeam es una aplicación web diseñada para conectar personas con intereses similares que deseen realizar actividades en grupo. Imagina poder encontrar rápidamente a 5 personas en tu zona que quieran salir a correr, jugar al fútbol, practicar senderismo o incluso aprender un nuevo idioma.</p>
