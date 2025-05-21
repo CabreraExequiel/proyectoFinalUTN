@@ -6,10 +6,12 @@ import { FootballComponent } from './Componentes/football/football.component';
 import { BasketballComponent } from './Componentes/basketball/basketball.component';
 import { InicioComponent } from './Componentes/inicio/inicio.component';
 import { LoginComponent } from './Componentes/login/login.component';
+import { PerfilComponent } from './Componentes/perfil/perfil.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 
    { path: 'login', component: LoginComponent }, 
+   { path: 'perfil', component: PerfilComponent }, 
   {
     path: 'home',
     component: HomeComponent,

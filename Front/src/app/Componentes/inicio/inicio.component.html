@@ -1,1 +1,9 @@
-<h1>Inicio</h1>
+
+
+<div *ngIf="clima">
+  <h2>Clima en {{ clima.name }}</h2>
+  <p>Temperatura: {{ clima.main.temp }}°C</p>
+  <p>Condición: {{ clima.weather[0].description }}</p>
+  <p>Humedad: {{ clima.main.humidity }}%</p>
+  <p>Viento: {{ clima.wind.speed }} m/s</p>
+</div>
