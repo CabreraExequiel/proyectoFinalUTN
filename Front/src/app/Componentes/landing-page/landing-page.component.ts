@@ -47,6 +47,6 @@ export class LandingPageComponent {
         this.nuevoUsuario.password = '';
       });
     }
-    this.router.navigate(['/home'])
+    this.router.navigate(['/login'])
   }
 }

@@ -1,0 +1,9 @@
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form  (ngSubmit)="login()" #form="ngForm">
+      <input type="text" placeholder="Usuario" name="username" required>
+      <input type="password" placeholder="Contraseña" name="password" required>
+      <button type="submit">Entrar</button>
+      <div class="error-message" id="errorMsg"></div>
+    </form>
+  </div>

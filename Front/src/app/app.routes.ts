@@ -4,20 +4,24 @@ import { HomeComponent } from './Componentes/home/home.component';
 import { RunningComponent } from './Componentes/running/running.component';
 import { FootballComponent } from './Componentes/football/football.component';
 import { BasketballComponent } from './Componentes/basketball/basketball.component';
+import { InicioComponent } from './Componentes/inicio/inicio.component';
+import { LoginComponent } from './Componentes/login/login.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingPageComponent }, // landing en raíz
+  { path: '', component: LandingPageComponent }, 
+   { path: 'login', component: LoginComponent }, 
   {
     path: 'home',
     component: HomeComponent,
     children: [
+      { path: 'inicio', component: InicioComponent },
       { path: 'football', component: FootballComponent },
       { path: 'run', component: RunningComponent },
       { path: 'basket', component: BasketballComponent },
-      { path: '', redirectTo: 'football', pathMatch: 'full' }
+      { path: '', redirectTo: 'inicio', pathMatch: 'full' }
     ]
   },
-  { path: '**', redirectTo: '' } // cualquier ruta desconocida redirige a landing (ruta raíz)
+  { path: '**', redirectTo: 'inicio' } 
 ];
 
 
