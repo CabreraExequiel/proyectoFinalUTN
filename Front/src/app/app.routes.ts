@@ -6,9 +6,11 @@ import { FootballComponent } from './Componentes/football/football.component';
 import { BasketballComponent } from './Componentes/basketball/basketball.component';
 import { InicioComponent } from './Componentes/inicio/inicio.component';
 import { LoginComponent } from './Componentes/login/login.component';
-import { PerfilComponent } from './Componentes/perfil/perfil.component';
 import { CalisteniaComponent } from './Componentes/calistenia/calistenia.component';
 import { VoleyComponent } from './Componentes/voley/voley.component';
+import { PerfilComponent } from './Componentes/perfil/perfil.component';
+
+
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 

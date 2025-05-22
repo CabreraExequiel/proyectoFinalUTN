@@ -5,13 +5,14 @@
     }
 
     .futbol-fondo {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       z-index: -1;
+
       
     }
 
@@ -24,4 +25,36 @@
       text-align: center;
       margin: 40px 0;
       color: #333;
+    }
+    .vacantes{
+      display: flex;
+      color: rgb(255, 175, 146);
+      font-weight: 700;
+    }
+    .unirse{
+      display: flex;
+      justify-content: space-evenly;
+      width: 130px;
+      height: 40px;
+    }
+    .main-card{
+      background-color: #0000001e;
+      color: rgb(255, 255, 255);
+      overflow: hidden;
+      height: 250px;
+      font-weight: bold;
+    }
+    .main-card img{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      object-fit: cover;
+      
+      
+    }
+    .card-body{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
     }
