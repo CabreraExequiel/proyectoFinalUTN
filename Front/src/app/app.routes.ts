@@ -8,10 +8,12 @@ import { InicioComponent } from './Componentes/inicio/inicio.component';
 import { LoginComponent } from './Componentes/login/login.component';
 import { CalisteniaComponent } from './Componentes/calistenia/calistenia.component';
 import { VoleyComponent } from './Componentes/voley/voley.component';
+import { PerfilComponent } from './Componentes/perfil/perfil.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 
    { path: 'login', component: LoginComponent }, 
+   { path: 'perfil', component: PerfilComponent }, 
   {
     path: 'home',
     component: HomeComponent,
