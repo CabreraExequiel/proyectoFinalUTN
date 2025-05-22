@@ -9,6 +9,10 @@ import { LoginComponent } from './Componentes/login/login.component';
 import { CalisteniaComponent } from './Componentes/calistenia/calistenia.component';
 import { VoleyComponent } from './Componentes/voley/voley.component';
 import { PerfilComponent } from './Componentes/perfil/perfil.component';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7cd5b7d68b785d042f945d94b771d5a010d8de0c
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 
