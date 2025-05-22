@@ -7,6 +7,8 @@ import { BasketballComponent } from './Componentes/basketball/basketball.compone
 import { InicioComponent } from './Componentes/inicio/inicio.component';
 import { LoginComponent } from './Componentes/login/login.component';
 import { PerfilComponent } from './Componentes/perfil/perfil.component';
+import { CalisteniaComponent } from './Componentes/calistenia/calistenia.component';
+import { VoleyComponent } from './Componentes/voley/voley.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 
@@ -20,6 +22,8 @@ export const routes: Routes = [
       { path: 'football', component: FootballComponent },
       { path: 'run', component: RunningComponent },
       { path: 'basket', component: BasketballComponent },
+      { path: 'calistenia', component: CalisteniaComponent},
+      { path: 'voleyball', component: VoleyComponent},
       { path: '', redirectTo: 'inicio', pathMatch: 'full' }
     ]
   },
