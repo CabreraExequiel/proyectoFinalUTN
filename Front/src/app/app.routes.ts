@@ -10,7 +10,6 @@ import { CalisteniaComponent } from './Componentes/calistenia/calistenia.compone
 import { VoleyComponent } from './Componentes/voley/voley.component';
 import { PerfilComponent } from './Componentes/perfil/perfil.component';
 
-
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 
    { path: 'login', component: LoginComponent }, 
