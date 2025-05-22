@@ -30,6 +30,7 @@ public class Usuario {
             this.correo = correo;
             this.password = password;
         }
+        
     }
 
 

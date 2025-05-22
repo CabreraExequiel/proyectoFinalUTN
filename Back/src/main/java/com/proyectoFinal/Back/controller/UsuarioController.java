@@ -24,4 +24,6 @@ public class UsuarioController {
     public List<Usuario> verUsuario(){
         return userService.verUsuario();
     };
+
+ 
 }
