@@ -1,9 +1,21 @@
 <div class="login-container">
-    <h2>Iniciar Sesión</h2>
-    <form  (ngSubmit)="login()" #form="ngForm">
-      <input type="text" placeholder="Usuario" name="username" required>
-      <input type="password" placeholder="Contraseña" name="password" required>
-      <button type="submit">Entrar</button>
-      <div class="error-message" id="errorMsg"></div>
-    </form>
+  <h2>Iniciar Sesión</h2>
+  <form (ngSubmit)="onLogin()">
+    <div>
+      <label>Correo:</label>
+      <input type="email" [(ngModel)]="correo" name="correo" required />
+    </div>
+    <div>
+      <label>Contraseña:</label>
+      <input type="password" [(ngModel)]="password" name="password" required />
+    </div>
+    <button type="submit">Login</button>
+    <div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
+  </form>
+
+  <!-- Botón para volver a la landing page -->
+  <div style="text-align: center; margin-top: 20px;">
+    <button type="button" (click)="volverLanding()">Registrarse</button>
+
   </div>
+</div>

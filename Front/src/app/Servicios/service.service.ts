@@ -7,9 +7,29 @@ import { Observable } from 'rxjs';
 })
 export class UsuarioService {
   private apiUrlVer = 'http://localhost:8080/ver/usuario';
-  private apiUrlNuevo = 'http://localhost:8080/nuevo/usuario';
+  private apiUrlNuevo = 'http://localhost:8080/user/register';
+  private apiUrlLogin = 'http://localhost:8080/user/login';
+
+  
 
   constructor(private http: HttpClient) {}
+
+  login(correo: string, password: string): Observable<string> {
+    const body = { correo, password };
+    return this.http.post(this.apiUrlLogin, body, { responseType: 'text' });
+  }
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+  }
+  
 
   verUsuarios(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrlVer);
@@ -19,3 +39,4 @@ export class UsuarioService {
     return this.http.post<any>(this.apiUrlNuevo, usuario);
   }
 }
+

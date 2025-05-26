@@ -1,0 +1,88 @@
+.news-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 2rem;
+}
+
+.news-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.news-card {
+  flex: 0 0 auto;
+  width: 300px;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background: #ffffffcc;
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-nav.left {
+  left: 0;
+}
+
+.carousel-nav.right {
+  right: 0;
+}
+.weather-card {
+  max-width: 400px;
+  background: linear-gradient(135deg, #6fb1fc, #4364f7);
+  color: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: 2rem auto;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(67, 100, 247, 0.4);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.weather-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(67, 100, 247, 0.6);
+}
+
+.weather-icon {
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+}
+
+.weather-card h2 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.weather-card small {
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+.weather-card h1 {
+  font-weight: 900;
+  font-size: 4rem;
+  margin: 0.5rem 0 1rem 0;
+  letter-spacing: 2px;
+}
+
+.weather-details p {
+  font-size: 1.15rem;
+  margin: 0.3rem 0;
+  letter-spacing: 0.5px;
+}

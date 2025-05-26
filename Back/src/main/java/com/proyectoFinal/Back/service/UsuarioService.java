@@ -18,15 +18,17 @@ public class UsuarioService implements IUsuarioService {
     @Autowired
     public UsuarioRepository userRepo;
 
-    @Override
-    public void agregarUsuario(Usuario user) {
-        userRepo.save(user);
-    }
 
     @Override
     public List<Usuario> verUsuario() {
         return userRepo.findAll();
     }
+
+    @Override
+    public Optional<Usuario> buscarPorCorreo(String correo) {
+        return userRepo.findByCorreo(correo);
+    }
+
 
     @Override
     public boolean registrarUsuario(Usuario user) {
@@ -36,7 +38,8 @@ public class UsuarioService implements IUsuarioService {
         }
 
         try {
-            Argon2 argon2 = Argon2Factory.create();
+            Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+
             String hash = argon2.hash(1, 1024, 1, user.getPassword()); // Hasheo de la contraseña
             user.setPassword(hash);
             userRepo.save(user);

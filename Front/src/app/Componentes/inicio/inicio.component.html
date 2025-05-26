@@ -1,9 +1,49 @@
+<div class="container mt-4">
+  <!-- Sección Clima -->
+  <div class="mb-4">
+    <div *ngIf="clima" class="weather-card shadow rounded p-4">
+      <div class="d-flex align-items-center mb-3">
+        <img
+          [src]="'https://openweathermap.org/img/wn/' + clima.weather[0].icon + '@2x.png'"
+          alt="Icono del clima"
+          class="weather-icon me-3"
+        />
+        <div>
+          <h2 class="mb-0">{{ clima.name }}</h2>
+          <small class="text-muted text-capitalize">{{ clima.weather[0].description }}</small>
+        </div>
+      </div>
+      <h1 class="display-4 fw-bold">{{ clima.main.temp }}°C</h1>
+      <div class="weather-details mt-3">
+        <p class="mb-1">💧 Humedad: {{ clima.main.humidity }}%</p>
+        <p class="mb-1">🌬 Viento: {{ clima.wind.speed }} m/s</p>
+        <p class="mb-0">📍 Ubicación: {{ clima.name }}, {{ clima.sys.country }}</p>
+      </div>
+    </div>
+  </div>
 
-
-<div *ngIf="clima">
-  <h2>Clima en {{ clima.name }}</h2>
-  <p>Temperatura: {{ clima.main.temp }}°C</p>
-  <p>Condición: {{ clima.weather[0].description }}</p>
-  <p>Humedad: {{ clima.main.humidity }}%</p>
-  <p>Viento: {{ clima.wind.speed }} m/s</p>
+  <!-- Sección Noticias -->
+  <div>
+    <h3>📰 Últimas noticias</h3>
+    <div class="news-carousel-wrapper">
+      <button class="carousel-nav left" (click)="scrollNoticias(-1)">‹</button>
+      <div class="news-carousel" #carousel>
+        <div *ngFor="let noticia of noticias" class="news-card">
+          <div class="card h-100">
+            <img
+              [src]="noticia.urlToImage || 'https://via.placeholder.com/300x180?text=Sin+imagen'"
+              class="card-img-top"
+              alt="Imagen de noticia"
+            />
+            <div class="card-body">
+              <h6 class="card-title">{{ noticia.title }}</h6>
+              <p class="card-text text-truncate">{{ noticia.description }}</p>
+              <a [href]="noticia.url" target="_blank" class="btn btn-primary btn-sm">Leer más</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-nav right" (click)="scrollNoticias(1)">›</button>
+    </div>
+  </div>
 </div>
