@@ -14,6 +14,7 @@ import { NoticiasService } from '../../Servicios/noticias.service';
 })
 export class InicioComponent implements OnInit {
 
+  forecast: any[] = [];
   noticias: any[] = [];
   clima: any = null;
   ciudad: string = '';
@@ -33,24 +34,37 @@ export class InicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Obtener clima
-    this.weatherService.getWeather('Concordia,AR').subscribe({
-      next: (data) => {
-        this.clima = data;
-      },
-      error: (err) => {
-        console.error('Error al obtener el clima:', err);
-      }
-    });
+  // Obtener clima actual
+  this.weatherService.getWeather('Concordia,AR').subscribe({
+    next: (data) => {
+      this.clima = data;
+    },
+    error: (err) => {
+      console.error('Error al obtener el clima:', err);
+    }
+  });
 
-    // Obtener noticias
-    this.noticiasService.getNoticias().subscribe({
-      next: (data) => {
-        this.noticias = data.articles;
-      },
-      error: (err) => {
-        console.error('Error al obtener noticias', err);
-      }
-    });
-  }
+  // Obtener pronóstico
+  this.weatherService.getForecast('Concordia,AR').subscribe({
+    next: (data) => {
+      this.forecast = data.list.filter((item: any) =>
+        item.dt_txt.includes('12:00:00')
+      );
+    },
+    error: (err) => {
+      console.error('Error al obtener el pronóstico:', err);
+    }
+  });
+
+  // ✅ AGREGAR ESTA PARTE
+  this.noticiasService.getNoticias().subscribe({
+    next: (data) => {
+      this.noticias = data.articles; // Asegurate que sea "articles"
+    },
+    error: (err) => {
+      console.error('Error al obtener las noticias:', err);
+    }
+  });
+}
+
 }

@@ -1,26 +1,62 @@
 <div class="container mt-4">
-  <!-- Sección Clima -->
-  <div class="mb-4">
-    <div *ngIf="clima" class="weather-card shadow rounded p-4">
-      <div class="d-flex align-items-center mb-3">
-        <img
-          [src]="'https://openweathermap.org/img/wn/' + clima.weather[0].icon + '@2x.png'"
-          alt="Icono del clima"
-          class="weather-icon me-3"
-        />
-        <div>
-          <h2 class="mb-0">{{ clima.name }}</h2>
-          <small class="text-muted text-capitalize">{{ clima.weather[0].description }}</small>
+<!-- Contenedor con fondo -->
+<div class="container d-flex justify-content-center">
+  <div class="bg-light shadow-lg rounded p-4 w-100" style="max-width: 100%;">
+    
+    <!-- Fila horizontal: Clima + Pronóstico -->
+    <!-- Fila horizontal: Clima + Pronóstico -->
+<div class="d-flex gap-4 overflow-auto align-items-center">
+
+      
+      <!-- Clima actual -->
+      <div *ngIf="clima" class="weather-card shadow rounded p-4 bg-white" style="min-width: 300px;">
+        <div class="d-flex align-items-center mb-3">
+          <img
+            [src]="'https://openweathermap.org/img/wn/' + clima.weather[0].icon + '@2x.png'"
+            alt="Icono del clima"
+            class="weather-icon me-3"
+          />
+          <div>
+            <h2 class="mb-0">{{ clima.name }}</h2>
+            <small class="text-muted text-capitalize">{{ clima.weather[0].description }}</small>
+          </div>
+        </div>
+        <h1 class="display-4 fw-bold">{{ clima.main.temp }}°C</h1>
+        <div class="weather-details mt-3">
+          <p class="mb-1">💧 Humedad: {{ clima.main.humidity }}%</p>
+          <p class="mb-1">🌬 Viento: {{ clima.wind.speed }} m/s</p>
+          <p class="mb-0">📍 Ubicación: {{ clima.name }}, {{ clima.sys.country }}</p>
         </div>
       </div>
-      <h1 class="display-4 fw-bold">{{ clima.main.temp }}°C</h1>
-      <div class="weather-details mt-3">
-        <p class="mb-1">💧 Humedad: {{ clima.main.humidity }}%</p>
-        <p class="mb-1">🌬 Viento: {{ clima.wind.speed }} m/s</p>
-        <p class="mb-0">📍 Ubicación: {{ clima.name }}, {{ clima.sys.country }}</p>
-      </div>
+
+      <!-- Tarjetas del pronóstico en fila -->
+<ng-container *ngIf="forecast.length">
+  <div *ngFor="let dia of forecast" 
+       class="weather-card shadow rounded text-center bg-white d-flex flex-column justify-content-center align-items-center p-2"
+       style="width: 130px; min-width: 130px; height: 200px;">
+    <div>
+      <strong>{{ dia.dt_txt | date: 'EEEE' }}</strong><br />
+      <small>{{ dia.dt_txt | date: 'dd/MM' }}</small>
     </div>
+    <img
+      [src]="'https://openweathermap.org/img/wn/' + dia.weather[0].icon + '@2x.png'"
+      alt="Icono del clima"
+      style="width: 50px;"
+    />
+    <div>
+      <span class="fw-bold">{{ dia.main.temp }}°C</span>
+    </div>
+    <small class="text-muted text-capitalize">{{ dia.weather[0].description }}</small>
   </div>
+</ng-container>
+
+
+    </div>
+
+  </div>
+</div>
+
+  
 
   <!-- Sección Noticias -->
   <div>

@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class NoticiasService {
   private apiKey = '256e6d03700740b19524bf8f58251a98'; 
-private url = 'https://newsapi.org/v2/top-headlines?country=us';
+private url = 'https://newsapi.org/v2/top-headlines?country=us&category=sports';
+
 
 
   constructor(private http: HttpClient) {}
