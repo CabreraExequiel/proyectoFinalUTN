@@ -9,11 +9,14 @@ import { LoginComponent } from './Componentes/login/login.component';
 import { CalisteniaComponent } from './Componentes/calistenia/calistenia.component';
 import { VoleyComponent } from './Componentes/voley/voley.component';
 import { PerfilComponent } from './Componentes/perfil/perfil.component';
+import { SalasComponent } from './componentes-reutilizables/salas/salas.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 
    { path: 'login', component: LoginComponent }, 
    { path: 'perfil', component: PerfilComponent }, 
+   { path: 'salas', component: SalasComponent },
+   
   {
     path: 'home',
     component: HomeComponent,

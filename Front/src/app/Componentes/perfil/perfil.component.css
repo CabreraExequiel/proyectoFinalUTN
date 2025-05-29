@@ -1,0 +1,66 @@
+.perfil-container {
+  max-width: 800px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.portada {
+  height: 200px;
+  background: url('https://placehold.co/800x200') no-repeat center center;
+  background-size: cover;
+}
+
+.perfil-info {
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.foto-perfil {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid white;
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+}
+
+.perfil-info h2 {
+  margin-top: 70px;
+  margin-bottom: 5px;
+}
+
+.bio {
+  font-style: italic;
+  color: #555;
+}
+
+.acciones {
+  margin-top: 10px;
+}
+
+.acciones button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  background: #1877f2;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.publicaciones {
+  padding: 20px;
+}
+
+.publicacion {
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
+}

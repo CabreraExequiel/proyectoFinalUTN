@@ -1,0 +1,24 @@
+<div class="perfil-container">
+  <!-- Imagen de portada -->
+  <div class="portada"></div>
+
+  <!-- Información principal -->
+  <div class="perfil-info">
+    <img class="foto-perfil" src="https://i.pravatar.cc/150?img=3" alt="Foto de perfil" />
+    <h2>{{ nombre }}</h2>
+    <p class="bio">{{ biografia }}</p>
+    <div class="acciones">
+      <button>Agregar amigo</button>
+      <button>Mensaje</button>
+    </div>
+  </div>
+
+  <!-- Sección de publicaciones -->
+  <div class="publicaciones">
+    <h3>Publicaciones</h3>
+    <div *ngFor="let pub of publicaciones" class="publicacion">
+      <p>{{ pub.contenido }}</p>
+      <small>{{ pub.fecha }}</small>
+    </div>
+  </div>
+</div>
