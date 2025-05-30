@@ -4,6 +4,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { WeatherService } from '../../Servicios/WeatherService';
 import { NoticiasService } from '../../Servicios/noticias.service';
+import { ChatComponent } from "../../componentes-reutilizables/chat/chat.component";
 
 @Component({
   selector: 'app-inicio',
