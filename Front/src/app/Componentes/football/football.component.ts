@@ -1,32 +1,68 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
+
+interface Sala {
+  id_sala: number;
+  nombre_sala: string;
+  deporte: string;
+  descripcion: string;
+  cantidad_integrantes: number;
+  limite_integrantes: number;
+  ubicacion: string;
+  horario?: string; // Agregado para mostrar el horario
+}
 
 @Component({
   selector: 'app-football',
   standalone: true,
-  imports: [RouterModule,CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './football.component.html',
   styleUrl: './football.component.css'
 })
-export class FootballComponent {
-  cards = [
-    {
-      title: 'FUTBOL 5 A LAS 19:00 HS',
-      description: 'faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123',
-      image: 'assets/futbol-card.jpg',
-      vacantes: '1/6'
-    },
-    ]
-    agregarCard() {
-  // Por ejemplo, agregamos una card con datos genéricos
-  this.cards.push({
-    title: 'NUEVO FUTBOL 5',
-    description: 'Nueva cancha agregada, ¡sumate!',
-    image: 'assets/futbol-card.jpg',
-    vacantes: '6/6'
-  });
-}
+export class FootballComponent implements OnInit {
+  salas: Sala[] = [];
+  isLoading = true;
+  error: string | null = null;
 
+  constructor(private http: HttpClient) {}
 
+  async ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.error = 'Debes iniciar sesión para ver las salas de fútbol';
+      this.isLoading = false;
+      return;
+    }
+
+    try {
+      const response = await lastValueFrom(
+        this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar', {
+          headers: {
+            'Authorization': `${localStorage.getItem('token')}`
+          }
+        })
+      );
+      
+      // Filtrar solo salas de football (fútbol)
+      this.salas = response.filter(sala => 
+        sala.deporte.toLowerCase() === 'football' || 
+        sala.deporte.toLowerCase() === 'fútbol'
+      );
+      this.isLoading = false;
+    } catch (err) {
+      console.error('Error al obtener salas de fútbol:', err);
+      this.error = 'Error al cargar las salas de fútbol. Intenta nuevamente más tarde.';
+      this.isLoading = false;
+    }
+  }
+
+  // Función para formatear el horario (si está disponible)
+  formatHorario(horario: string | undefined): string {
+    if (!horario) return '';
+    const [hours, minutes] = horario.split(':');
+    return `A LAS ${hours}:${minutes} HS`;
+  }
 }

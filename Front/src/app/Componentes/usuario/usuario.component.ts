@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css']
 })
+
 export class UsuarioComponent implements OnInit {
   usuarios: any[] = [];
   nuevoUsuario = { nombre: '' , apellido: ''};

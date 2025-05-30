@@ -1,53 +1,89 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
+
+interface Sala {
+  id_sala: number;
+  nombre_sala: string;
+  deporte: string;
+  descripcion: string;
+  cantidad_integrantes: number;
+  limite_integrantes: number;
+  ubicacion: string;
+  horario?: string;
+}
 
 @Component({
   selector: 'app-voley',
   standalone: true,
-  imports: [RouterModule,CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './voley.component.html',
   styleUrl: './voley.component.css'
 })
-export class VoleyComponent {
-  cards = [
-  {
-    titulo: 'FUTBOL 5 A LAS 19:00 HS',
-    descripcion: 'faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123',
-    vacantes: '1/6',
-    imagen: 'assets/voley-fondo.jpg'
-  },
-  {
-    titulo: 'FUTBOL 7 A LAS 20:00 HS',
-    descripcion: 'faltan 8 para un futbol 7 en "La Cancha", calle real 456',
-    vacantes: '2/7',
-    imagen: 'assets/voley-fondo.jpg'
-  },
-   {
-    titulo: 'FUTBOL 5 A LAS 19:00 HS',
-    descripcion: 'faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123',
-    vacantes: '1/6',
-    imagen: 'assets/voley-fondo.jpg'
-  },
-  {
-    titulo: 'FUTBOL 7 A LAS 20:00 HS',
-    descripcion: 'faltan 8 para un futbol 7 en "La Cancha", calle real 456',
-    vacantes: '2/7',
-    imagen: 'assets/voley-fondo.jpg'
-  },
-   {
-    titulo: 'FUTBOL 5 A LAS 19:00 HS',
-    descripcion: 'faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123',
-    vacantes: '1/6',
-    imagen: 'assets/voley-fondo.jpg'
-  },
-  {
-    titulo: 'FUTBOL 7 A LAS 20:00 HS',
-    descripcion: 'faltan 8 para un futbol 7 en "La Cancha", calle real 456',
-    vacantes: '2/7',
-    imagen: 'assets/voley-fondo.jpg'
-  },
-];
+export class VoleyComponent implements OnInit {
+  salas: Sala[] = [];
+  isLoading = true;
+  error: string | null = null;
 
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
+  async ngOnInit() {
+    await this.loadVolleyballRooms();
+  }
+
+  private async loadVolleyballRooms() {
+    try {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        throw new Error('No hay token de autenticación');
+      }
+
+      const response = await lastValueFrom(
+        this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar', {
+          headers: {
+            'Authorization': token
+          }
+        })
+      );
+      
+      // Filtrar solo salas de volleyball
+      this.salas = response.filter(sala => 
+        sala.deporte.toLowerCase() === 'volleyball' || 
+        sala.deporte.toLowerCase() === 'vóley' ||
+        sala.deporte.toLowerCase() === 'voleibol'
+      );
+      
+    } catch (err) {
+      console.error('Error al obtener salas de volleyball:', err);
+      this.error = 'Error al cargar las salas. Intenta nuevamente más tarde.';
+      
+      if (err instanceof Error && err.message.includes('token')) {
+        this.router.navigate(['/login']);
+      }
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  formatHorario(horario: string | undefined): string {
+    if (!horario) return '';
+    const [hours, minutes] = horario.split(':');
+    return `A LAS ${hours}:${minutes} HS`;
+  }
+
+  // Propiedad computada para compatibilidad con el template actual
+  get cards() {
+    return this.salas.map(sala => ({
+      imagen: 'assets/voley-card.jpg', // Imagen por defecto
+      titulo: `${sala.nombre_sala.toUpperCase()} ${this.formatHorario(sala.horario)}`,
+      descripcion: `${sala.descripcion} - ${sala.ubicacion}`,
+      vacantes: `${sala.cantidad_integrantes}/${sala.limite_integrantes}`
+    }));
+  }
 }

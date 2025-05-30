@@ -1,0 +1,78 @@
+<div class="sala-creator-container">
+  <div class="header-section text-center mb-5">
+    <h1 class="display-4 fw-bold text-primary">Crear sala</h1>
+
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4 p-md-5">
+          <form [formGroup]="salaForm" (ngSubmit)="onSubmit()">
+            <!-- Nombre de la Sala -->
+            <div class="mb-4">
+              <label for="nombreSala" class="form-label fw-semibold">Nombre de la Sala</label>
+              <input type="text" class="form-control form-control-lg" id="nombreSala" 
+                     formControlName="nombre" placeholder="Ej: Futbol los Domingos">
+              <div *ngIf="salaForm.get('nombre')?.invalid && (salaForm.get('nombre')?.dirty || salaForm.get('nombre')?.touched)"
+                   class="text-danger mt-1">
+                El nombre es requerido (máx. 50 caracteres)
+              </div>
+            </div>
+
+            <!-- Tipo de Sala -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Tipo de Actividad</label>
+              <div class="sport-options row g-3">
+                <div class="col-6 col-md-4" *ngFor="let sport of deportes">
+                  <input type="radio" class="btn-check" name="tipoSala" [id]="sport.value" 
+                         formControlName="tipo" [value]="sport.value" autocomplete="off">
+                  <label class="btn btn-outline-primary w-100 py-3" [for]="sport.value">
+                    <i [class]="sport.icon"></i> {{ sport.label }}
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Horario y Lugar -->
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <label for="horario" class="form-label fw-semibold">Horario</label>
+                <input type="time" class="form-control form-control-lg" id="horario" 
+                       formControlName="horario">
+              </div>
+              <div class="col-md-6">
+                <label for="lugar" class="form-label fw-semibold">Lugar de Encuentro</label>
+                <input type="text" class="form-control form-control-lg" id="lugar" 
+                       formControlName="lugar" placeholder="Ej: Parque Central">
+              </div>
+            </div>
+
+            <!-- Descripción y Límite -->
+            <div class="row g-3 mb-4">
+              <div class="col-md-8">
+                <label for="descripcion" class="form-label fw-semibold">Descripción</label>
+                <textarea class="form-control" id="descripcion" rows="3" 
+                          formControlName="descripcion" placeholder="Describe el grupo y la actividad..."></textarea>
+              </div>
+              <div class="col-md-4">
+                <label for="limite" class="form-label fw-semibold">Límite de Integrantes</label>
+                <select class="form-select form-select-lg" id="limite" formControlName="limite">
+                  <option *ngFor="let num of [2,3,4,5,6,7,8,9,10]" [value]="num">{{ num }} personas</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary btn-lg fw-bold py-3" 
+                      [disabled]="!salaForm.valid">
+                <i class="fas fa-plus-circle me-2"></i> Crear Sala
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
