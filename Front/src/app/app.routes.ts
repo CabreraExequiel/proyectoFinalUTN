@@ -10,6 +10,7 @@ import { CalisteniaComponent } from './Componentes/calistenia/calistenia.compone
 import { VoleyComponent } from './Componentes/voley/voley.component';
 import { PerfilComponent } from './Componentes/perfil/perfil.component';
 import { SalasComponent } from './componentes-reutilizables/salas/salas.component';
+import { CrearSalaComponent } from './Componentes/crear-sala/crear-sala.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 
@@ -27,6 +28,7 @@ export const routes: Routes = [
       { path: 'basket', component: BasketballComponent },
       { path: 'calistenia', component: CalisteniaComponent},
       { path: 'voleyball', component: VoleyComponent},
+      { path: 'crear_sala', component: CrearSalaComponent },
       { path: '', redirectTo: 'inicio', pathMatch: 'full' }
     ]
   },

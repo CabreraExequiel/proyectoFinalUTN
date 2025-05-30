@@ -1,84 +1,42 @@
 <h1>Calistenia</h1>
-    
-    <div class="container">
-      
 
-      <img class="calistenia-fondo" src="assets/calistenia-dondo.jpg" alt="Fondo de calistenia">
-      <div class="row">
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-5">
-          <div class="main-card card ">
-            <img src="assets/calistenia-card.jpg" class="card-img-top" alt="Imagen">
-            <div class="card-body">
-              <h5 class="card-title">FUTBOL 5 A LAS 19:00 HS</h5>
-              <p class="card-text">faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123 </p>
-              <a href="#" class="btn unirse btn-primary"> Sumarse <p class="vacantes">1/6</p></a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-5">
-          <div class="main-card card ">
-            <img src="assets/calistenia-card.jpg" class="card-img-top" alt="Imagen">
-            <div class="card-body">
-              <h5 class="card-title">FUTBOL 5 A LAS 19:00 HS</h5>
-              <p class="card-text">faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123 </p>
-              <a href="#" class="btn unirse btn-primary"> Sumarse <p class="vacantes">1/6</p></a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-5">
-          <div class="main-card card ">
-            <img src="assets/calistenia-card.jpg" class="card-img-top" alt="Imagen">
-            <div class="card-body">
-              <h5 class="card-title">FUTBOL 5 A LAS 19:00 HS</h5>
-              <p class="card-text">faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123 </p>
-              <a href="#" class="btn unirse btn-primary"> Sumarse <p class="vacantes">1/6</p></a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-5">
-          <div class="main-card card ">
-            <img src="assets/calistenia-card.jpg" class="card-img-top" alt="Imagen">
-            <div class="card-body">
-              <h5 class="card-title">FUTBOL 5 A LAS 19:00 HS</h5>
-              <p class="card-text">faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123 </p>
-              <a href="#" class="btn unirse btn-primary"> Sumarse <p class="vacantes">1/6</p></a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-5">
-          <div class="main-card card ">
-            <img src="assets/calistenia-card.jpg" class="card-img-top" alt="Imagen">
-            <div class="card-body">
-              <h5 class="card-title">FUTBOL 5 A LAS 19:00 HS</h5>
-              <p class="card-text">faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123 </p>
-              <a href="#" class="btn unirse btn-primary"> Sumarse <p class="vacantes">1/6</p></a>
-            </div>
-          </div>
-        </div>
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-5">
-          <div class="main-card card ">
-            <img src="assets/calistenia-card.jpg" class="card-img-top" alt="Imagen">
-            <div class="card-body">
-              <h5 class="card-title">FUTBOL 5 A LAS 19:00 HS</h5>
-              <p class="card-text">faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123 </p>
-              <a href="#" class="btn unirse btn-primary"> Sumarse <p class="vacantes">1/6</p></a>
-            </div>
-          </div>
-        </div><!-- Card 1 -->
-        <div class="col-md-4 mb-5">
-          <div class="main-card card ">
-            <img src="assets/calistenia-card.jpg" class="card-img-top" alt="Imagen">
-            <div class="card-body">
-              <h5 class="card-title">FUTBOL 5 A LAS 19:00 HS</h5>
-              <p class="card-text">faltan 6 para un futbol 5 en la cancha "el zurdo", callefalsa 123 </p>
-              <a href="#" class="btn unirse btn-primary"> Sumarse <p class="vacantes">1/6</p></a>
-            </div>
-          </div>
-    </div>
+<div class="container">
+  <img class="calistenia-fondo" src="assets/calistenia-dondo.jpg" alt="Fondo de calistenia">
   
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-3">Cargando salas de calistenia...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Success State -->
+  <div class="row">
+    <!-- Tarjeta dinámica para cada sala -->
+    <div *ngFor="let sala of salas" class="col-md-4 mb-5">
+      <div class="main-card card">
+        <img src="assets/calistenia-card.jpg" class="card-img-top" alt="Imagen de calistenia">
+        <div class="card-body">
+          <h5 class="card-title">{{ sala.nombre_sala }}</h5>
+          <p class="card-text">{{ sala.descripcion }} - {{ sala.ubicacion }}</p>
+          <a href="#" class="btn unirse btn-primary"> 
+            Sumarse 
+            <p class="vacantes">{{ sala.cantidad_integrantes }}/{{ sala.limite_integrantes }}</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje cuando no hay salas -->
+    <div *ngIf="!isLoading && !error && salas.length === 0" class="col-12 text-center py-5">
+      <p>No hay salas de calistenia disponibles en este momento.</p>
+      <button class="btn btn-primary" routerLink="/home/crear_sala">Crear primera sala</button>
+    </div>
+  </div>
+</div>
