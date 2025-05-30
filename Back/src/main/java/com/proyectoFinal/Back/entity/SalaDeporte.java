@@ -18,16 +18,18 @@ public class SalaDeporte {
         private String descripcion;
         private int cantidad_integrantes;
         private int limite_integrantes;
+        private String ubicacion;
 
 
         private SalaDeporte(){}
 
-        private SalaDeporte(Long id_sala, String nombre_sala, String deporte, String descripcion, int cantidad_integrantes, int limite_integrantes){
+        private SalaDeporte(Long id_sala, String nombre_sala, String deporte, String descripcion, int cantidad_integrantes, int limite_integrantes, String ubicacion){
             this.id_sala = id_sala;
             this.nombre_sala = nombre_sala;
             this.deporte = deporte;
             this.descripcion = descripcion;
             this.cantidad_integrantes = cantidad_integrantes;
             this.limite_integrantes = limite_integrantes;
+            this.ubicacion = ubicacion;
         }
 }

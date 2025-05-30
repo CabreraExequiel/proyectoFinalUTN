@@ -78,18 +78,5 @@
 
 
     </div>
-  <button class="btn-float" (click)="agregarCard()">＋</button>
-  <div class="row">
-  <div *ngFor="let card of cards" class="col-md-4 mb-5">
-    <div class="main-card card">
-      <img [src]="card.image" class="card-img-top" alt="Imagen">
-      <div class="card-body">
-        <h5 class="card-title">{{ card.title }}</h5>
-        <p class="card-text">{{ card.description }}</p>
-        <a href="#" class="btn unirse btn-primary">
-          Sumarse <p class="vacantes">{{ card.vacantes }}</p>
-        </a>
-      </div>
-    </div>
-  </div>
+  
 </div>
