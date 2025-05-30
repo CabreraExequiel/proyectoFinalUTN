@@ -17,4 +17,5 @@ export class PerfilComponent {
     { contenido: '¡Hoy fue un gran día!', fecha: '2025-05-29' },
     { contenido: 'Trabajando en un nuevo proyecto Angular 🚀', fecha: '2025-05-28' },
   ];
+  
 }

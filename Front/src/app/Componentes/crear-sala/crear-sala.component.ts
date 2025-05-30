@@ -57,7 +57,11 @@ export class CrearSalaComponent {
 
     try {
       const response = await lastValueFrom(
-        this.http.post('http://localhost:8080/sala/deporte/crear', payload)
+        this.http.post('http://localhost:8080/sala/deporte/crear', payload,{
+          headers: {
+            'Authorization': `${localStorage.getItem('token')}`
+          }
+        })
       );
       console.log('Sala creada:', response);
       this.router.navigate(['/home']);

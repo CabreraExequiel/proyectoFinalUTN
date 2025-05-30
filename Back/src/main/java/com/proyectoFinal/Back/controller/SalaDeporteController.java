@@ -45,8 +45,10 @@ public class SalaDeporteController {
     @PostMapping("/sala/deporte/crear")
     public ResponseEntity<List<SalaDeporte>> createSalaDeporte(@RequestBody SalaDeporte salaDeporte, @RequestHeader("Authorization") String token) {
         if (!validarToken(token)) {
+            System.out.println("ACA ESTA EL ERROR");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Valida el token y retorna un error 401 si no es válido
         }
+        System.out.println("Pasa");
         List<SalaDeporte> nuevaSala = salaDeporteService.crearSalaDeporte(salaDeporte);
         return ResponseEntity.ok(nuevaSala);   // Retorna la lista de salas de deporte actualizada después de crear una nueva sala
     }
