@@ -1,20 +1,42 @@
 <h1>Volleyball</h1>
 
 <div class="container">
-  <img class="futbol-fondo" src="assets/voley-fondo.jpg" alt="Fondo de vóley">
+  <img class="volley-fondo" src="assets/voley-fondo.jpg" alt="Fondo de vóley">
+  
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-3">Cargando equipos de volleyball...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Success State -->
   <div class="row">
+    <!-- Tarjeta dinámica para cada sala -->
     <div class="col-md-4 mb-5" *ngFor="let card of cards">
       <div class="main-card card">
-        <img [src]="card.imagen" class="card-img-top" alt="Imagen">
+        <img [src]="card.imagen" class="card-img-top" alt="Partido de volleyball">
         <div class="card-body">
           <h5 class="card-title">{{ card.titulo }}</h5>
           <p class="card-text">{{ card.descripcion }}</p>
-          <a href="#" class="btn unirse btn-primary">
+          <a routerLink="/salas" class="btn unirse btn-primary">
             Sumarse
             <p class="vacantes">{{ card.vacantes }}</p>
           </a>
         </div>
       </div>
+    </div>
+
+    <!-- Mensaje cuando no hay salas -->
+    <div *ngIf="!isLoading && !error && salas.length === 0" class="col-12 text-center py-5">
+      <p>No hay equipos de volleyball disponibles en este momento.</p>
+      <a routerLink="/home/crear_sala" class="btn btn-primary">Crear nuevo equipo</a>
     </div>
   </div>
 </div>
