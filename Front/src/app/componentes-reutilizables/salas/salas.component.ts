@@ -9,5 +9,6 @@ import { ChatComponent } from "../chat/chat.component";
   styleUrl: './salas.component.css'
 })
 export class SalasComponent {
+salaSeleccionada: any;
 
 }
