@@ -14,10 +14,11 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  login(correo: string, password: string): Observable<string> {
-    const body = { correo, password };
-    return this.http.post(this.apiUrlLogin, body, { responseType: 'text' });
-  }
+  login(correo: string, password: string): Observable<{ token: string, usuario: any }> {
+  const body = { correo, password };
+  return this.http.post<{ token: string, usuario: any }>(this.apiUrlLogin, body);
+}
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }

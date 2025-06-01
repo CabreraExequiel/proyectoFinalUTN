@@ -13,7 +13,10 @@
     </div>
 
     <div class="entrada">
-      <input [(ngModel)]="remitente" placeholder="Tu nombre" class="nombre" />
+      <div class="nombre-usuario">
+         {{ nombreUsuario }}
+      </div>
+
       <input [(ngModel)]="contenido" placeholder="Escribe un mensaje" class="texto" (keyup.enter)="enviarMensaje()" />
       <button (click)="enviarMensaje()">Enviar</button>
     </div>

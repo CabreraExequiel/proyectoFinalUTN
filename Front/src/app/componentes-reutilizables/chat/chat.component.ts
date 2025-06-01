@@ -17,6 +17,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   contenido = '';
   mensajes: ChatMessage[] = [];
   chatAbierto = false;
+    nombreUsuario: string = '';
+
 
   private sub: Subscription = new Subscription();
 
@@ -24,8 +26,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
   this.http.get<ChatMessage[]>('http://localhost:8080/historial').subscribe(historial => {
-    this.mensajes = historial;
-
+    
+    this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Anónimo';
+    this.remitente = this.nombreUsuario;
     this.chatService.subscribeToSala();
     this.sub = this.chatService.messages$.subscribe((mensaje) => {
       if (mensaje) {
