@@ -16,6 +16,10 @@ import com.proyectoFinal.Back.entity.Usuario;
 import com.proyectoFinal.Back.service.IUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class UsuarioController {
@@ -52,19 +56,34 @@ public class UsuarioController {
     public ResponseEntity<String> loginUser(@RequestBody Usuario user,HttpSession session) {
         boolean inicioExitoso = userService.iniciarSesion(user);
         if (!inicioExitoso) {
-            return ResponseEntity.status(401).body("Error al iniciar sesión");
+            return ResponseEntity.status(401).build(); // Mejor sin texto plano
         }
-        // Obtener el usuario completo desde la BD para generar token con id real
+
         Optional<Usuario> usuarioOptional = userService.buscarPorCorreo(user.getCorreo());
         if (usuarioOptional.isEmpty()) {
-            return ResponseEntity.status(401).body("Usuario no encontrado");
+            return ResponseEntity.status(401).build();
         }
+
         Usuario usuario = usuarioOptional.get();
 
         session.setAttribute("usuario", usuario); // Guardo info del usuario en cookie de sesión
 
         String token = jwtUtil.create(String.valueOf(usuario.getId()), usuario.getCorreo(), null);
-        return ResponseEntity.ok(token);
+
+        // Crear el response
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", token);
+
+        // Puedes personalizar qué datos del usuario deseas enviar
+        Map<String, Object> usuarioData = new HashMap<>();
+        usuarioData.put("id", usuario.getId());
+        usuarioData.put("nombre", usuario.getNombre());
+        usuarioData.put("correo", usuario.getCorreo());
+
+        response.put("usuario", usuarioData);
+
+        return ResponseEntity.ok(response);
     }
+
 
 }

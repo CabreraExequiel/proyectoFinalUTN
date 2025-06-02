@@ -4,15 +4,15 @@ import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 
+// Modelo de Sala
 interface Sala {
-  id_sala: number;
   nombre_sala: string;
-  deporte: string;
   descripcion: string;
+  ubicacion: string;
+  horario?: string;
+  deporte: string;
   cantidad_integrantes: number;
   limite_integrantes: number;
-  ubicacion: string;
-  horario?: string; // Agregado para mostrar el horario
 }
 
 @Component({
@@ -20,7 +20,7 @@ interface Sala {
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './football.component.html',
-  styleUrl: './football.component.css'
+  styleUrls: ['./football.component.css'] // corregido
 })
 export class FootballComponent implements OnInit {
   salas: Sala[] = [];
@@ -46,10 +46,9 @@ export class FootballComponent implements OnInit {
           withCredentials: true
         })
       );
-      
-      // Filtrar solo salas de football (fútbol)
-      this.salas = response.filter(sala => 
-        sala.deporte.toLowerCase() === 'football' || 
+
+      this.salas = response.filter(sala =>
+        sala.deporte.toLowerCase() === 'football' ||
         sala.deporte.toLowerCase() === 'fútbol'
       );
       this.isLoading = false;
@@ -60,7 +59,6 @@ export class FootballComponent implements OnInit {
     }
   }
 
-  // Función para formatear el horario (si está disponible)
   formatHorario(horario: string | undefined): string {
     if (!horario) return '';
     const [hours, minutes] = horario.split(':');

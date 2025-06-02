@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ChatService } from '../../Servicios/chat.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ChatService, ChatMessage } from '../../Servicios/chat.service';
+import { Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',
@@ -11,24 +13,60 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  messages: any[] = [];
-  messageText = '';
-  username = 'Usuario' + Math.floor(Math.random() * 1000);
-  room = 'sala1'; // puedes cambiarlo dinámicamente
+  remitente = '';
+  contenido = '';
+  mensajes: ChatMessage[] = [];
+  chatAbierto = false;
+    nombreUsuario: string = '';
 
-  constructor(private chatService: ChatService) {}
+
+  private sub: Subscription = new Subscription();
+
+  constructor(private chatService: ChatService, private http: HttpClient) {}
 
   ngOnInit() {
+  this.http.get<ChatMessage[]>('http://localhost:8080/historial').subscribe(historial => {
+    
+    this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Anónimo';
+    this.remitente = this.nombreUsuario;
+    this.chatService.subscribeToSala();
+    this.sub = this.chatService.messages$.subscribe((mensaje) => {
+      if (mensaje) {
+        this.mensajes.push(mensaje);
+        setTimeout(() => this.scrollToBottom(), 0);
+      }
+    });
+  });
+}
+
+
+  enviarMensaje() {
+    if (!this.contenido || !this.remitente) return;
+
+    const mensaje: ChatMessage = {
+      remitente: this.remitente,
+      contenido: this.contenido,
+      timestamp: new Date().toISOString()
+    };
+    this.chatService.sendMessage('general', mensaje);
+    this.contenido = '';
   }
 
-  send() {
-    if (this.messageText.trim()) {
-      this.chatService.sendMessage(this.room, this.username, this.messageText);
-      this.messageText = '';
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
+  toggleChat() {
+    this.chatAbierto = !this.chatAbierto;
+    if (this.chatAbierto) {
+      setTimeout(() => this.scrollToBottom(), 0);
     }
   }
 
-  ngOnDestroy() {
-    this.chatService.disconnect();
+  private scrollToBottom() {
+    const mensajesDiv = document.querySelector('.mensajes');
+    if (mensajesDiv) {
+      mensajesDiv.scrollTop = mensajesDiv.scrollHeight;
+    }
   }
 }

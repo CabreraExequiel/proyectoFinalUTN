@@ -7,9 +7,9 @@ import com.proyectoFinal.Back.entity.Usuario;
 
 public interface IUsuarioService {
     //public void agregarUsuario(Usuario user);
-    public List<Usuario> verUsuario();
-    public boolean registrarUsuario(Usuario user);
-    public boolean iniciarSesion(Usuario user);
+     List<Usuario> verUsuario();
+     boolean registrarUsuario(Usuario user);
+     boolean iniciarSesion(Usuario user);
     Optional<Usuario> buscarPorCorreo(String correo);
 
 }

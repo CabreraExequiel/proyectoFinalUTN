@@ -14,6 +14,9 @@
       z-index: -1;
       
     }
+    .main-card:hover {
+  transform: translateY(-5px);
+}
 
     .card {
       background-color: rgba(255, 255, 255, 0.95);

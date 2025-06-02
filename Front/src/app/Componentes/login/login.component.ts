@@ -19,16 +19,18 @@ correo: string = '';
   constructor(private usuarioService: UsuarioService, private router: Router) {}
 
   onLogin() {
-    this.usuarioService.login(this.correo, this.password).subscribe({
-      next: (token) => {
-        localStorage.setItem('token', token); // Guardamos el JWT
-        this.router.navigate(['/home']); // Redireccionamos (ajusta la ruta)
-      },
-      error: (err) => {
-        this.errorMessage = 'Correo o contraseña incorrectos';
-      },
-    });
-  }
+  this.usuarioService.login(this.correo, this.password).subscribe({
+    next: (response) => {
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('nombreUsuario', response.usuario.nombre);
+      this.router.navigate(['/home']);
+    },
+    error: () => {
+      this.errorMessage = 'Correo o contraseña incorrectos';
+    }
+  });
+}
+
   volverLanding() {
   this.router.navigate(['/']);
 }

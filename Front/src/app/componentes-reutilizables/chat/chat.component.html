@@ -1,11 +1,24 @@
-<!-- chat.component.html -->
-<div class="chat-box">
-  <div *ngFor="let msg of messages">
-    <strong>{{ msg.sender }}:</strong> {{ msg.content }}
+<div class="chat-flotante" [class.abierto]="chatAbierto">
+  <div class="chat-header" (click)="toggleChat()">
+    💬 Chat en vivo
   </div>
 
-  <div class="chat-input">
-    <input [(ngModel)]="messageText" (keyup.enter)="send()" placeholder="Escribe un mensaje..." />
-    <button (click)="send()">Enviar</button>
+  <div class="chat-body" *ngIf="chatAbierto">
+    <div class="mensajes">
+      <div *ngFor="let mensaje of mensajes" class="mensaje">
+        <strong>{{ mensaje.remitente }}:</strong>
+        <span>{{ mensaje.contenido }}</span>
+        <small class="hora">({{ mensaje.timestamp | date:'shortTime' }})</small>
+      </div>
+    </div>
+
+    <div class="entrada">
+      <div class="nombre-usuario">
+         {{ nombreUsuario }}
+      </div>
+
+      <input [(ngModel)]="contenido" placeholder="Escribe un mensaje" class="texto" (keyup.enter)="enviarMensaje()" />
+      <button (click)="enviarMensaje()">Enviar</button>
+    </div>
   </div>
 </div>
