@@ -1,14 +1,21 @@
 package com.proyectoFinal.Back.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.proyectoFinal.Back.Token.JwtUtil;
 import com.proyectoFinal.Back.entity.Usuario;
 import com.proyectoFinal.Back.service.IUsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 public class UsuarioController {
@@ -42,7 +49,7 @@ public class UsuarioController {
 
 
     @PostMapping("/user/login")
-    public ResponseEntity<String> loginUser(@RequestBody Usuario user) {
+    public ResponseEntity<String> loginUser(@RequestBody Usuario user,HttpSession session) {
         boolean inicioExitoso = userService.iniciarSesion(user);
         if (!inicioExitoso) {
             return ResponseEntity.status(401).body("Error al iniciar sesión");
@@ -53,6 +60,9 @@ public class UsuarioController {
             return ResponseEntity.status(401).body("Usuario no encontrado");
         }
         Usuario usuario = usuarioOptional.get();
+
+        session.setAttribute("usuario", usuario); // Guardo info del usuario en cookie de sesión
+
         String token = jwtUtil.create(String.valueOf(usuario.getId()), usuario.getCorreo(), null);
         return ResponseEntity.ok(token);
     }

@@ -42,7 +42,8 @@ export class FootballComponent implements OnInit {
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar', {
           headers: {
             'Authorization': `${localStorage.getItem('token')}`
-          }
+          },
+          withCredentials: true
         })
       );
       

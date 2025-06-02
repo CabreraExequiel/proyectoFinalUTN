@@ -48,7 +48,8 @@ export class VoleyComponent implements OnInit {
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar', {
           headers: {
             'Authorization': token
-          }
+          },
+          withCredentials: true,
         })
       );
       

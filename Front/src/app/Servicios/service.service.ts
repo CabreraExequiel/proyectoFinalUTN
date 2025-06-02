@@ -15,9 +15,12 @@ export class UsuarioService {
   constructor(private http: HttpClient) {}
 
   login(correo: string, password: string): Observable<string> {
-    const body = { correo, password };
-    return this.http.post(this.apiUrlLogin, body, { responseType: 'text' });
-  }
+  const body = { correo, password };
+  return this.http.post(this.apiUrlLogin, body, { 
+    responseType: 'text',
+    withCredentials: true  // 👈 Aquí añadimos el soporte para credenciales
+  });
+}
   getToken(): string | null {
     return localStorage.getItem('token');
   }
@@ -32,8 +35,10 @@ export class UsuarioService {
   
 
   verUsuarios(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrlVer);
-  }
+  return this.http.get<any[]>(this.apiUrlVer, { 
+    withCredentials: true 
+  });
+}
 
   crearUsuario(usuario: any): Observable<any> {
     return this.http.post<any>(this.apiUrlNuevo, usuario);

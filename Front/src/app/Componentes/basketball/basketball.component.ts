@@ -48,7 +48,8 @@ export class BasketballComponent implements OnInit {
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar', {
           headers: {
             'Authorization': token // Sin 'Bearer' como prefieres
-          }
+          },
+          withCredentials: true
         })
       );
       
