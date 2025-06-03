@@ -5,7 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 
 // Modelo de Sala
+// Modelo de Sala
 interface Sala {
+  id: number; // ✅ Agregado
   nombre_sala: string;
   descripcion: string;
   ubicacion: string;
@@ -14,6 +16,7 @@ interface Sala {
   cantidad_integrantes: number;
   limite_integrantes: number;
 }
+
 
 @Component({
   selector: 'app-football',

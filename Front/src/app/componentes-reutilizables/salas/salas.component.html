@@ -1,2 +1,15 @@
-<h1>salas</h1>
-<app-chat></app-chat>
+<h1>Sala: {{ salaSeleccionada?.nombre_sala || 'Cargando...' }}</h1>
+
+<div *ngIf="salaSeleccionada?.error" class="alert alert-danger">
+  {{ salaSeleccionada.error }}
+</div>
+
+<div *ngIf="salaSeleccionada && !salaSeleccionada.error">
+  <p><strong>Descripción:</strong> {{ salaSeleccionada.descripcion }}</p>
+  <p><strong>Ubicación:</strong> {{ salaSeleccionada.ubicacion }}</p>
+  <p><strong>Horario:</strong> {{ salaSeleccionada.horario }}</p>
+  <p><strong>Vacantes:</strong> {{ salaSeleccionada.cantidad_integrantes }}/{{ salaSeleccionada.limite_integrantes }}</p>
+
+  <!-- Componente de chat -->
+  <app-chat></app-chat>
+</div>

@@ -17,9 +17,7 @@ import com.proyectoFinal.Back.service.IUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class UsuarioController {
@@ -53,7 +51,7 @@ public class UsuarioController {
 
 
     @PostMapping("/user/login")
-    public ResponseEntity<String> loginUser(@RequestBody Usuario user,HttpSession session) {
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody Usuario user, HttpSession session) {
         boolean inicioExitoso = userService.iniciarSesion(user);
         if (!inicioExitoso) {
             return ResponseEntity.status(401).build(); // Mejor sin texto plano
