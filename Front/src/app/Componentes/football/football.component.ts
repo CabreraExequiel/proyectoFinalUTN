@@ -41,8 +41,9 @@ export class FootballComponent implements OnInit {
       const response = await lastValueFrom(
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar', {
           headers: {
-            'Authorization': token
-          }
+            'Authorization': `${localStorage.getItem('token')}`
+          },
+          withCredentials: true
         })
       );
 

@@ -60,7 +60,8 @@ export class CrearSalaComponent {
         this.http.post('http://localhost:8080/sala/deporte/crear', payload,{
           headers: {
             'Authorization': `${localStorage.getItem('token')}`
-          }
+          },
+          withCredentials: true
         })
       );
       console.log('Sala creada:', response);

@@ -32,7 +32,7 @@ export class CalisteniaComponent implements OnInit {
     try {
       const response = await lastValueFrom(
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar',
-          {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+          {headers: {'Authorization': `${localStorage.getItem('token')}`},withCredentials: true})
       );
       
       // Filtrar solo salas de calistenia
