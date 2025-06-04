@@ -35,13 +35,15 @@ export class CrearSalaComponent {
 
   constructor() {
     this.salaForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.maxLength(50)]],
-      tipo: ['football', Validators.required],
-      horario: ['', Validators.required],
-      lugar: ['', Validators.required],
-      descripcion: ['', [Validators.required, Validators.maxLength(200)]],
-      limite: [5, Validators.required]
-    });
+  nombre: ['', [Validators.required, Validators.maxLength(50)]],
+  tipo: ['', Validators.required],
+  horario: ['', Validators.required],
+  lugar: ['', Validators.required],
+  descripcion: ['', Validators.required],
+  limite: [2, Validators.required],
+  latitud: [null, [Validators.required, Validators.min(-90), Validators.max(90)]],
+  longitud: [null, [Validators.required, Validators.min(-180), Validators.max(180)]]
+});
   }
 
   async onSubmit() {
@@ -52,7 +54,9 @@ export class CrearSalaComponent {
     deporte: this.salaForm.value.tipo,
     descripcion: this.salaForm.value.descripcion,
     limite_integrantes: this.salaForm.value.limite,
-    ubicacion: this.salaForm.value.lugar
+    ubicacion: this.salaForm.value.lugar,
+    latitud: this.salaForm.value.latitud,     // <-- agregado
+    longitud: this.salaForm.value.longitud    // <-- agregado
   };
 
   try {
@@ -66,13 +70,16 @@ export class CrearSalaComponent {
     console.log('Sala deporte creada:', responseSalaDeporte);
 
     const payloadSalaReunion = {
-      nombreSala: this.salaForm.value.nombre,
-      descripcion: this.salaForm.value.descripcion,
-      ubicacion: this.salaForm.value.lugar,
-      deporte: this.salaForm.value.tipo,
-      limiteIntegrantes: this.salaForm.value.limite,
-      salaDeporteId: responseSalaDeporte.id_sala  // Ajusta según la respuesta real
-    };
+  nombreSala: this.salaForm.value.nombre,
+  descripcion: this.salaForm.value.descripcion,
+  ubicacion: this.salaForm.value.lugar,
+  deporte: this.salaForm.value.tipo,
+  limiteIntegrantes: this.salaForm.value.limite,
+  latitud: this.salaForm.value.latitud,     // <-- agregado
+  longitud: this.salaForm.value.longitud,   // <-- agregado
+  salaDeporteId: responseSalaDeporte.id_sala  // Ajusta según la respuesta real
+};
+
 
     const responseSalaReunion: any = await lastValueFrom(
       this.http.post('http://localhost:8080/create', payloadSalaReunion, {

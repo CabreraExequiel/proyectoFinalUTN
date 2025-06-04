@@ -19,11 +19,12 @@
 
   <!-- Lista de usuarios -->
   <h3>Integrantes</h3>
-  <ul>
-    <li *ngFor="let usuario of salaSeleccionada.usuariosIngresados">
-      {{ usuario.nombre }} {{ usuario.apellido }} ({{ usuario.correo }})
-    </li>
-  </ul>
+<ul>
+  <li *ngFor="let usuario of salaSeleccionada.usuariosIngresados">
+    {{ usuario.nombre }} {{ usuario.apellido }} ({{ usuario.correo }})
+  </li>
+</ul>
+
 
   <!-- Chat -->
   <app-chat></app-chat>
