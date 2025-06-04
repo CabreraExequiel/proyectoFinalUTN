@@ -35,14 +35,14 @@ public class SalaDeporteController {
         return usuarioId != null;
     }
 
-  
+
 
     @GetMapping("/sala/deporte/mostrar")
     public ResponseEntity<List<SalaDeporte>> registerUser(@RequestHeader("Authorization") String token) {
         if (!validarToken(token)) {
-           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Esta función valida el token y retorna un error 401 si no es válido (Se va a repetir en todos los métodos que requieran autenticación)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Esta función valida el token y retorna un error 401 si no es válido (Se va a repetir en todos los métodos que requieran autenticación)
         }
-       return ResponseEntity.ok(salaDeporteService.verSalasDeporte());  // Si el token es válido, retorna la lista de salas de deporte
+        return ResponseEntity.ok(salaDeporteService.verSalasDeporte());  // Si el token es válido, retorna la lista de salas de deporte
     }
 
     @PostMapping("/sala/deporte/crear")
@@ -68,7 +68,7 @@ public class SalaDeporteController {
 
     @PostMapping("/sala/deporte/unirse")
     public ResponseEntity<String> unirseSalaDeporte(@RequestParam("id_2") Long idSala, @RequestParam("id_3") Long idUsuario) {
-        
+
         salaDeporteService.unirseSalaDeporte(idSala, idUsuario); // Llama al servicio para unirse a la sala de deporte
         return ResponseEntity.ok("Unido a la sala de deporte correctamente");
     }

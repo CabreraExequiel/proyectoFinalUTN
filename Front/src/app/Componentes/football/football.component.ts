@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
 // Modelo de Sala
 // Modelo de Sala
 interface Sala {
-  id: number; // ✅ Agregado
+  id_sala: number;
   nombre_sala: string;
   descripcion: string;
   ubicacion: string;
@@ -54,6 +54,7 @@ export class FootballComponent implements OnInit {
         sala.deporte.toLowerCase() === 'football' ||
         sala.deporte.toLowerCase() === 'fútbol'
       );
+      console.log('Salas filtradas:', this.salas);
       this.isLoading = false;
     } catch (err) {
       console.error('Error al obtener salas de fútbol:', err);

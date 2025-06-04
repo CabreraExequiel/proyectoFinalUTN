@@ -17,8 +17,14 @@ export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 
    { path: 'login', component: LoginComponent }, 
    { path: 'perfil', component: PerfilComponent }, 
-   { path: 'salas', component: SalasComponent },
    { path: 'salas/:id', component: SalasComponent },
+   {
+  path: 'sala/:id',
+  loadComponent: () => import('./componentes-reutilizables/salas/salas.component').then(m => m.SalasComponent)
+},
+
+
+
 
    
    
