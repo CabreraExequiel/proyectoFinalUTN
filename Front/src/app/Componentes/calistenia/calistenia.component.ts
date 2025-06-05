@@ -7,11 +7,12 @@ import { lastValueFrom } from 'rxjs';
 interface Sala {
   id_sala: number;
   nombre_sala: string;
-  deporte: string;
   descripcion: string;
+  ubicacion: string;
+  horario?: string;
+  deporte: string;
   cantidad_integrantes: number;
   limite_integrantes: number;
-  ubicacion: string;
 }
 
 @Component({
