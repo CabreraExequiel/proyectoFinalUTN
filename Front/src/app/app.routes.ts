@@ -12,11 +12,21 @@ import { PerfilComponent } from './Componentes/perfil/perfil.component';
 import { SalasComponent } from './componentes-reutilizables/salas/salas.component';
 import { CrearSalaComponent } from './Componentes/crear-sala/crear-sala.component';
 
+
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, 
    { path: 'login', component: LoginComponent }, 
    { path: 'perfil', component: PerfilComponent }, 
-   { path: 'salas', component: SalasComponent },
+   { path: 'salas/:id', component: SalasComponent },
+   {
+  path: 'sala/:id',
+  loadComponent: () => import('./componentes-reutilizables/salas/salas.component').then(m => m.SalasComponent)
+},
+
+
+
+
+   
    
   {
     path: 'home',

@@ -5,7 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 
 // Modelo de Sala
+// Modelo de Sala
 interface Sala {
+  id_sala: number;
   nombre_sala: string;
   descripcion: string;
   ubicacion: string;
@@ -14,6 +16,7 @@ interface Sala {
   cantidad_integrantes: number;
   limite_integrantes: number;
 }
+
 
 @Component({
   selector: 'app-football',
@@ -41,8 +44,9 @@ export class FootballComponent implements OnInit {
       const response = await lastValueFrom(
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar', {
           headers: {
-            'Authorization': token
-          }
+            'Authorization': `${localStorage.getItem('token')}`
+          },
+          withCredentials: true
         })
       );
 
@@ -50,6 +54,7 @@ export class FootballComponent implements OnInit {
         sala.deporte.toLowerCase() === 'football' ||
         sala.deporte.toLowerCase() === 'fútbol'
       );
+      console.log('Salas filtradas:', this.salas);
       this.isLoading = false;
     } catch (err) {
       console.error('Error al obtener salas de fútbol:', err);

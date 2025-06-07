@@ -7,12 +7,12 @@ import { Router, RouterModule } from '@angular/router';
 interface Sala {
   id_sala: number;
   nombre_sala: string;
-  deporte: string;
   descripcion: string;
-  cantidad_integrantes: number;
-  limite_integrantes: number;
   ubicacion: string;
   horario?: string;
+  deporte: string;
+  cantidad_integrantes: number;
+  limite_integrantes: number;
 }
 
 @Component({
@@ -48,7 +48,8 @@ export class RunningComponent implements OnInit {
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar', {
           headers: {
             'Authorization': token // Sin 'Bearer'
-          }
+          },
+          withCredentials: true
         })
       );
       

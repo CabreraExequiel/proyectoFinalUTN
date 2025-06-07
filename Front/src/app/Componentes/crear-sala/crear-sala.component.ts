@@ -35,41 +35,75 @@ export class CrearSalaComponent {
 
   constructor() {
     this.salaForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.maxLength(50)]],
-      tipo: ['football', Validators.required],
-      horario: ['', Validators.required],
-      lugar: ['', Validators.required],
-      descripcion: ['', [Validators.required, Validators.maxLength(200)]],
-      limite: [5, Validators.required]
-    });
+  nombre: ['', [Validators.required, Validators.maxLength(50)]],
+  tipo: ['', Validators.required],
+  horario: ['', Validators.required],
+  lugar: ['', Validators.required],
+  descripcion: ['', Validators.required],
+  limite: [2, Validators.required],
+  latitud: [null, [Validators.required, Validators.min(-90), Validators.max(90)]],
+  longitud: [null, [Validators.required, Validators.min(-180), Validators.max(180)]]
+});
   }
 
   async onSubmit() {
-    if (this.salaForm.invalid) return;
+  if (this.salaForm.invalid) return;
 
-    const payload = {
-      nombre_sala: this.salaForm.value.nombre,
-      deporte: this.salaForm.value.tipo,
-      descripcion: this.salaForm.value.descripcion,
-      limite_integrantes: this.salaForm.value.limite,
-      ubicacion: this.salaForm.value.lugar
-    };
+  const payloadSalaDeporte = {
+    nombre_sala: this.salaForm.value.nombre,
+    deporte: this.salaForm.value.tipo,
+    descripcion: this.salaForm.value.descripcion,
+    limite_integrantes: this.salaForm.value.limite,
+    ubicacion: this.salaForm.value.lugar,
+    latitud: this.salaForm.value.latitud,     // <-- agregado
+    longitud: this.salaForm.value.longitud    // <-- agregado
+  };
 
-    try {
-      const response = await lastValueFrom(
-        this.http.post('http://localhost:8080/sala/deporte/crear', payload,{
-          headers: {
-            'Authorization': `${localStorage.getItem('token')}`
-          }
-        })
-      );
-      console.log('Sala creada:', response);
+  try {
+    // Crear sala deporte
+    const responseSalaDeporte: any = await lastValueFrom(
+      this.http.post('http://localhost:8080/sala/deporte/crear', payloadSalaDeporte, {
+        headers: { 'Authorization': `${localStorage.getItem('token')}` },
+        withCredentials: true
+      })
+    );
+    console.log('Sala deporte creada:', responseSalaDeporte);
+
+    const payloadSalaReunion = {
+  nombreSala: this.salaForm.value.nombre,
+  descripcion: this.salaForm.value.descripcion,
+  ubicacion: this.salaForm.value.lugar,
+  deporte: this.salaForm.value.tipo,
+  limiteIntegrantes: this.salaForm.value.limite,
+  latitud: this.salaForm.value.latitud,     // <-- agregado
+  longitud: this.salaForm.value.longitud,   // <-- agregado
+  salaDeporteId: responseSalaDeporte.id_sala  // Ajusta según la respuesta real
+};
+
+
+    const responseSalaReunion: any = await lastValueFrom(
+      this.http.post('http://localhost:8080/create', payloadSalaReunion, {
+        headers: { 'Authorization': `${localStorage.getItem('token')}` },
+        withCredentials: true
+      })
+    );
+    console.log('Sala reunión creada:', responseSalaReunion);
+
+    const idSalaCreada = responseSalaReunion.id || responseSalaReunion.idSala || responseSalaReunion.salaReunionId;
+
+    if (idSalaCreada) {
+      this.router.navigate(['/sala', idSalaCreada]);
+    } else {
+      // fallback en caso que no venga el id
       this.router.navigate(['/home']);
-    } catch (err) {
-      console.error('Error al crear sala:', err);
-      alert('Error al crear la sala. Intenta nuevamente.');
     }
+  } catch (err) {
+    console.error('Error al crear sala o sala reunión:', err);
+    alert('Error al crear sala o sala reunión. Intenta nuevamente.');
   }
+}
+
+
 }
 
 

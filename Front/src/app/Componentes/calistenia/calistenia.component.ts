@@ -7,11 +7,12 @@ import { lastValueFrom } from 'rxjs';
 interface Sala {
   id_sala: number;
   nombre_sala: string;
-  deporte: string;
   descripcion: string;
+  ubicacion: string;
+  horario?: string;
+  deporte: string;
   cantidad_integrantes: number;
   limite_integrantes: number;
-  ubicacion: string;
 }
 
 @Component({
@@ -32,7 +33,7 @@ export class CalisteniaComponent implements OnInit {
     try {
       const response = await lastValueFrom(
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar',
-          {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+          {headers: {'Authorization': `${localStorage.getItem('token')}`},withCredentials: true})
       );
       
       // Filtrar solo salas de calistenia

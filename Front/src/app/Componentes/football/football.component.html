@@ -25,10 +25,15 @@
         <div class="card-body">
           <h5 class="card-title">{{ sala.nombre_sala | uppercase }} {{ formatHorario(sala.horario) }}</h5>
           <p class="card-text">{{ sala.descripcion }} - {{ sala.ubicacion }}</p>
-          <a routerLink="/salas" class="btn unirse btn-primary"> 
-            Sumarse 
-            <p class="vacantes">{{ sala.cantidad_integrantes }}/{{ sala.limite_integrantes }}</p>
-          </a>
+          
+          <a *ngIf="sala.id_sala" [routerLink]="['/sala', sala.id_sala]" class="btn unirse btn-primary">
+          Sumarse
+          <p class="vacantes">{{ sala.cantidad_integrantes }}/{{ sala.limite_integrantes }}</p>
+          
+
+        </a>
+
+
         </div>
       </div>
     </div>

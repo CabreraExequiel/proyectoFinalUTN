@@ -1,2 +1,35 @@
-<h1>salas</h1>
-<app-chat></app-chat>
+<div *ngIf="salaSeleccionada && !salaSeleccionada.error">
+  <h2>{{ salaSeleccionada.nombreSala }}</h2>
+  <p><strong>Deporte:</strong> {{ salaSeleccionada.deporte }}</p>
+  <p><strong>Descripción:</strong> {{ salaSeleccionada.descripcion }}</p>
+  <p><strong>Ubicación:</strong> {{ salaSeleccionada.ubicacion }}</p>
+  <p><strong>Horario:</strong> {{ salaSeleccionada.horario | date:'short' }}</p>
+
+  <!-- Google Maps -->
+  <iframe
+  *ngIf="mapaUrl"
+  width="100%"
+  height="300"
+  frameborder="0"
+  style="border:0"
+  [src]="mapaUrl"
+  allowfullscreen>
+</iframe>
+
+
+  <!-- Lista de usuarios -->
+  <h3>Integrantes</h3>
+<ul>
+  <li *ngFor="let usuario of salaSeleccionada.usuariosIngresados">
+    {{ usuario.nombre }} {{ usuario.apellido }} ({{ usuario.correo }})
+  </li>
+</ul>
+
+
+  <!-- Chat -->
+  <app-chat></app-chat>
+</div>
+
+<div *ngIf="salaSeleccionada?.error">
+  <p style="color: red">{{ salaSeleccionada.error }}</p>
+</div>
