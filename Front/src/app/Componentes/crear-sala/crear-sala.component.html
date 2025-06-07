@@ -26,7 +26,7 @@
               <div class="sport-options row g-3">
                 <div class="col-6 col-md-4" *ngFor="let sport of deportes">
                   <input type="radio" class="btn-check" name="tipoSala" [id]="sport.value" 
-                         formControlName="tipo" [value]="sport.value" autocomplete="off">
+                         formControlName="tipoSala" [value]="sport.value" autocomplete="off">
                   <label class="btn btn-outline-primary w-100 py-3" [for]="sport.value">
                     <i [class]="sport.icon"></i> {{ sport.label }}
                   </label>
