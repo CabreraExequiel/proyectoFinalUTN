@@ -15,6 +15,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class SalasComponent implements OnInit {
   salaSeleccionada: any = null;
   mapaUrl: SafeResourceUrl | null = null;
+  salaAnterior: any = null;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -35,11 +37,17 @@ export class SalasComponent implements OnInit {
           withCredentials: true
         }).subscribe({
           next: (data: any) => {
-            this.salaSeleccionada = data;
-            if (data.latitud && data.longitud) {
-              this.setMapaUrl(data.latitud, data.longitud);
-            }
-          },
+        if (this.salaSeleccionada) {
+          this.salaAnterior = this.salaSeleccionada;
+        }
+        this.salaSeleccionada = data;
+        if (data.latitud && data.longitud) {
+          this.setMapaUrl(data.latitud, data.longitud);
+        } else {
+          this.mapaUrl = null;
+        }
+      },
+
           error: (err) => {
             console.error('Error al obtener la sala:', err);
             this.salaSeleccionada = { error: 'Sala no encontrada o error al cargar.' };
@@ -48,6 +56,7 @@ export class SalasComponent implements OnInit {
       }
     });
   }
+  
 
   setMapaUrl(lat: number, lng: number) {
     const url = `https://www.google.com/maps?q=${lat},${lng}&output=embed`;

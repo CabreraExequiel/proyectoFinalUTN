@@ -1,5 +1,6 @@
 <div *ngIf="salaSeleccionada && !salaSeleccionada.error">
   <h2>{{ salaSeleccionada.nombreSala }}</h2>
+  
   <p><strong>Deporte:</strong> {{ salaSeleccionada.deporte }}</p>
   <p><strong>Descripción:</strong> {{ salaSeleccionada.descripcion }}</p>
   <p><strong>Ubicación:</strong> {{ salaSeleccionada.ubicacion }}</p>
@@ -17,6 +18,8 @@
 </iframe>
 
 
+
+
   <!-- Lista de usuarios -->
   <h3>Integrantes</h3>
 <ul>
@@ -32,4 +35,5 @@
 
 <div *ngIf="salaSeleccionada?.error">
   <p style="color: red">{{ salaSeleccionada.error }}</p>
+  
 </div>
