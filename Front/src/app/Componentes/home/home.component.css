@@ -7,3 +7,7 @@
     position: fixed;
     top: 80px;
 }
+.fondo{
+    
+    z-index: -1;
+}
