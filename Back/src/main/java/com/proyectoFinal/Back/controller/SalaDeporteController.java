@@ -67,7 +67,7 @@ public class SalaDeporteController {
     }
 
     @PostMapping("/sala/deporte/unirse")
-    public ResponseEntity<String> unirseSalaDeporte(@RequestParam("id_2") Long idSala, @RequestParam("id_3") Long idUsuario) {
+    public ResponseEntity<String> unirseSalaDeporte(@RequestParam("id_sala") Long idSala, @RequestParam("id_usuario") Long idUsuario) {
 
         salaDeporteService.unirseSalaDeporte(idSala, idUsuario); // Llama al servicio para unirse a la sala de deporte
         return ResponseEntity.ok("Unido a la sala de deporte correctamente");

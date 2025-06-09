@@ -15,7 +15,6 @@
   <div *ngIf="error" class="alert alert-danger" role="alert">
     {{ error }}
   </div>
-
   <!-- Success State -->
   <div class="row">
     <!-- Tarjeta dinámica para cada sala -->
@@ -29,11 +28,7 @@
           <a *ngIf="sala.id_sala" [routerLink]="['/sala', sala.id_sala]" class="btn unirse btn-primary">
           Sumarse
           <p class="vacantes">{{ sala.cantidad_integrantes }}/{{ sala.limite_integrantes }}</p>
-          
-
         </a>
-
-
         </div>
       </div>
     </div>

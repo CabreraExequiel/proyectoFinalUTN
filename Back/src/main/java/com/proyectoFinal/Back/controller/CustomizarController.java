@@ -39,6 +39,15 @@ public class CustomizarController {
         return ResponseEntity.ok(customizarService.verSalasDeporte(id_usuario));
     }
 
+    @GetMapping("/custom/usuario/info")
+    public ResponseEntity<Usuario> customizarUsuario(@RequestHeader("Authorization") String token, HttpSession session) {
+        if (!validarToken(token)) {
+            return ResponseEntity.status(401).build(); 
+        }
+        Long id_usuario = ((Usuario) session.getAttribute("usuario")).getId();
+        return ResponseEntity.ok(customizarService.verUsuario(id_usuario));
+    }
+
 
     
     
