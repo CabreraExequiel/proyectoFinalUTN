@@ -77,7 +77,7 @@ public class UsuarioController {
         usuarioData.put("id", usuario.getId());
         usuarioData.put("nombre", usuario.getNombre());
         usuarioData.put("correo", usuario.getCorreo());
-
+        usuarioData.put("apellido", usuario.getApellido());
         response.put("usuario", usuarioData);
 
         return ResponseEntity.ok(response);

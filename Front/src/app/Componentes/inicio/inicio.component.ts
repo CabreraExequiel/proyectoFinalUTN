@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { WeatherService } from '../../Servicios/WeatherService';
 import { NoticiasService } from '../../Servicios/noticias.service';
 import { ChatComponent } from "../../componentes-reutilizables/chat/chat.component";
+import { ForoComponent } from "../foro/foro.component";
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [RouterModule, CommonModule, HttpClientModule],
+  imports: [RouterModule, CommonModule, HttpClientModule, ForoComponent],
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
 })
@@ -67,5 +68,6 @@ export class InicioComponent implements OnInit {
     }
   });
 }
+
 
 }

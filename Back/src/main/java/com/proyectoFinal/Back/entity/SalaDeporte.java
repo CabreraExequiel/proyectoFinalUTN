@@ -27,6 +27,8 @@ public class SalaDeporte {
     private int cantidad_integrantes;
     private int limite_integrantes;
     private String ubicacion;
+    private Double latitud;
+    private Double longitud;
     
     @ElementCollection
     @CollectionTable(

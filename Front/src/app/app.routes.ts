@@ -11,6 +11,7 @@ import { VoleyComponent } from './Componentes/voley/voley.component';
 import { PerfilComponent } from './Componentes/perfil/perfil.component';
 import { SalasComponent } from './componentes-reutilizables/salas/salas.component';
 import { CrearSalaComponent } from './Componentes/crear-sala/crear-sala.component';
+import { ForoComponent } from './Componentes/foro/foro.component';
 
 
 export const routes: Routes = [
@@ -22,6 +23,7 @@ export const routes: Routes = [
   path: 'sala/:id',
   loadComponent: () => import('./componentes-reutilizables/salas/salas.component').then(m => m.SalasComponent)
 },
+  { path: 'foro', component: ForoComponent },
 
 
 
