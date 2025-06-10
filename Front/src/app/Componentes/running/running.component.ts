@@ -47,13 +47,12 @@ export class RunningComponent implements OnInit {
       const response = await lastValueFrom(
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar', {
           headers: {
-            'Authorization': token // Sin 'Bearer'
+            'Authorization': token
           },
           withCredentials: true
         })
       );
       
-      // Filtrar solo salas de running
       this.salas = response.filter(sala => 
         sala.deporte.toLowerCase() === 'running' || 
         sala.deporte.toLowerCase() === 'correr'
@@ -75,5 +74,34 @@ export class RunningComponent implements OnInit {
     if (!horario) return '';
     const [hours, minutes] = horario.split(':');
     return `A LAS ${hours}:${minutes} HS`;
+  }
+
+  async unirseASala(event: Event, idSala: number) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Debes iniciar sesión para unirte a un grupo');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    try {
+      await lastValueFrom(
+        this.http.post(
+          `http://localhost:8080/sala/deporte/unirse?idSala=${idSala}`,
+          {},
+          {
+            headers: {
+              'Authorization': token
+            },
+            withCredentials: true
+          }
+        )
+      );
+    } catch (err) {
+      console.error('Error al unirse al grupo:', err);
+    }
   }
 }

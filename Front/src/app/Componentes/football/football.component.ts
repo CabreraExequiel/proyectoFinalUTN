@@ -4,8 +4,6 @@ import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 
-// Modelo de Sala
-// Modelo de Sala
 interface Sala {
   id_sala: number;
   nombre_sala: string;
@@ -17,13 +15,12 @@ interface Sala {
   limite_integrantes: number;
 }
 
-
 @Component({
   selector: 'app-football',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './football.component.html',
-  styleUrls: ['./football.component.css'] // corregido
+  styleUrls: ['./football.component.css']
 })
 export class FootballComponent implements OnInit {
   salas: Sala[] = [];
@@ -67,5 +64,35 @@ export class FootballComponent implements OnInit {
     if (!horario) return '';
     const [hours, minutes] = horario.split(':');
     return `A LAS ${hours}:${minutes} HS`;
+  }
+
+  async unirseASala(event: Event, idSala: number) {
+    event.preventDefault(); // Prevenir navegación por routerLink
+    event.stopPropagation(); // Detener propagación del evento
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Debes iniciar sesión para unirte a una sala');
+      return;
+    }
+
+    try {
+      await lastValueFrom(
+        this.http.post(
+          `http://localhost:8080/sala/deporte/unirse?idSala=${idSala}`,
+          {}, // cuerpo vacío
+          {
+            headers: {
+              'Authorization': token
+            },
+            withCredentials: true
+          }
+        )
+      );
+      // No necesitas manejar la respuesta según lo indicado
+    } catch (err) {
+      console.error('Error al unirse a la sala:', err);
+      // El manejo de errores se hará en la API según lo mencionado
+    }
   }
 }

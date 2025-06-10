@@ -15,7 +15,6 @@ interface Sala {
   limite_integrantes: number;
 }
 
-
 @Component({
   selector: 'app-voley',
   standalone: true,
@@ -81,13 +80,41 @@ export class VoleyComponent implements OnInit {
 
   // Propiedad computada para compatibilidad con el template actual
   get cards() {
-  return this.salas.map(sala => ({
-    id_sala: sala.id_sala, // ✅ para usarlo en routerLink
-    imagen: 'assets/voley-card.jpg',
-    titulo: `${sala.nombre_sala.toUpperCase()} ${this.formatHorario(sala.horario)}`,
-    descripcion: `${sala.descripcion} - ${sala.ubicacion}`,
-    vacantes: `${sala.cantidad_integrantes}/${sala.limite_integrantes}`
-  }));
-}
+    return this.salas.map(sala => ({
+      id_sala: sala.id_sala,
+      imagen: 'assets/voley-card.jpg',
+      titulo: `${sala.nombre_sala.toUpperCase()} ${this.formatHorario(sala.horario)}`,
+      descripcion: `${sala.descripcion} - ${sala.ubicacion}`,
+      vacantes: `${sala.cantidad_integrantes}/${sala.limite_integrantes}`
+    }));
+  }
 
+  async unirseASala(event: Event, idSala: number) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Debes iniciar sesión para unirte a un equipo');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    try {
+      await lastValueFrom(
+        this.http.post(
+          `http://localhost:8080/sala/deporte/unirse?idSala=${idSala}`,
+          {},
+          {
+            headers: {
+              'Authorization': token
+            },
+            withCredentials: true
+          }
+        )
+      );
+    } catch (err) {
+      console.error('Error al unirse al equipo:', err);
+    }
+  }
 }

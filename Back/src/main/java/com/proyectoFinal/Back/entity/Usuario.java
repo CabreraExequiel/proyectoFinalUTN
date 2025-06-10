@@ -19,18 +19,22 @@ public class Usuario {
         private String apellido;
         private  String correo;
         private String descripcion_usuario;
+        private String imagen_perfil;
+        private String imagen_portada;
         private String password;
 
 
         private Usuario(){}
 
-        private Usuario(Long id, String nombre, String apellido, String correo, String password, String descripcion_usuario) {
+        private Usuario(Long id, String nombre, String apellido, String correo, String password, String descripcion_usuario, String imagen_perfil, String imagen_portada) {
             this.id = id;
             this.nombre = nombre;
             this.apellido = apellido;
             this.correo = correo;
             this.password = password;
             this.descripcion_usuario = descripcion_usuario;
+            this.imagen_perfil = imagen_perfil;
+            this.imagen_portada = imagen_portada;
         }
         
     }

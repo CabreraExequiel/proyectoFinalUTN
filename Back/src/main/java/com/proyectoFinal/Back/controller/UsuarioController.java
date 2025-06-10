@@ -1,6 +1,8 @@
 package com.proyectoFinal.Back.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +19,6 @@ import com.proyectoFinal.Back.entity.Usuario;
 import com.proyectoFinal.Back.service.IUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class UsuarioController {
@@ -83,5 +84,13 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/user/cerrar_sesion")
+    public void cerrarSesion(HttpSession session, @RequestHeader("Authorization") String token) {
+        if (!validarToken(token)) {
+            throw new RuntimeException("Token inválido"); // Lanza una excepción si el token no es válido
+        }
+        session.invalidate();
+        System.out.println("Sesión cerrada correctamente");
+    }
 
 }
