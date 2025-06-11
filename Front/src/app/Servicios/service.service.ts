@@ -64,7 +64,7 @@ export class UsuarioService {
     localStorage.removeItem('nombreUsuario');
     
     // Opcional: redirigir al usuario a la página de inicio o login
-    // window.location.href = '/login';
+     window.location.href = '/login';
     
   } catch (error) {
     console.error('Error al cerrar sesión:', error);

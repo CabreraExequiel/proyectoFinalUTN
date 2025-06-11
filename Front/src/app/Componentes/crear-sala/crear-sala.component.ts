@@ -46,6 +46,15 @@ export class CrearSalaComponent {
 });
   }
 
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+  }
+
   async onSubmit() {
   if (this.salaForm.invalid) return;
 
