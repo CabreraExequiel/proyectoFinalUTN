@@ -4,7 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.swing.text.StringContent;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,12 +24,5 @@ public class Post {
     private String contenido;
     private LocalDateTime fechaPublicacion;
 
-    public Post(){}
 
-    public Post(Long id, String autor, String contenido, LocalDateTime fechaPublicacion){
-        this.id=id;
-        this.autor=autor;
-        this.contenido=contenido;
-        this.fechaPublicacion=fechaPublicacion;
-    }
 }

@@ -4,13 +4,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,12 +24,5 @@ public class Chat {
     private LocalDateTime timestamp;
 
 
-    public  Chat(){};
 
-    public Chat(Long id, String remitente, String contenido, LocalDateTime timestamp){
-        this.id = id;
-        this.remitente = remitente;
-        this.contenido = contenido;
-        this.timestamp = timestamp;
-    }
 }

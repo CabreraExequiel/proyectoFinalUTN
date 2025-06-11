@@ -1,7 +1,9 @@
 package com.proyectoFinal.Back.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -9,6 +11,8 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SalaReunion {
 
     @Id
@@ -23,22 +27,7 @@ public class SalaReunion {
     private String deporte;
     private int limiteIntegrantes;
 
-    public SalaReunion() {
-    }
 
-    public SalaReunion(Long id, String nombreSala, String descripcion, String ubicacion, Double latitud, Double longitud, LocalDateTime horario, String deporte, Integer limiteIntegrantes) {
-        this.id = id;
-        this.nombreSala = nombreSala;
-        this.descripcion = descripcion;
-        this.ubicacion = ubicacion;
-        this.latitud = latitud;
-        this.longitud = longitud;
-        this.horario = horario;
-        this.deporte = deporte;
-        this.limiteIntegrantes = limiteIntegrantes;
-
-
-    }
 }
 
 
