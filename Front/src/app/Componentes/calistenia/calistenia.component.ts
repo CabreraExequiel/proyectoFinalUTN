@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 
@@ -27,7 +27,10 @@ export class CalisteniaComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   async ngOnInit() {
     try {
@@ -43,6 +46,35 @@ export class CalisteniaComponent implements OnInit {
       console.error('Error al obtener salas:', err);
       this.error = 'Error al cargar las salas. Intenta nuevamente más tarde.';
       this.isLoading = false;
+    }
+  }
+
+  async unirseASala(event: Event, idSala: number) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Debes iniciar sesión para unirte a una sala');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    try {
+      await lastValueFrom(
+        this.http.post(
+          `http://localhost:8080/sala/deporte/unirse?idSala=${idSala}`,
+          {},
+          {
+            headers: {
+              'Authorization': token
+            },
+            withCredentials: true
+          }
+        )
+      );
+    } catch (err) {
+      console.error('Error al unirse a la sala:', err);
     }
   }
 }

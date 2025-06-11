@@ -19,20 +19,19 @@
   <!-- Success State -->
   <div class="row">
     <!-- Tarjeta dinámica para cada sala -->
-   <div class="col-md-4 mb-5" *ngFor="let card of cards">
-  <div class="main-card card">
-    <img [src]="card.imagen" class="card-img-top" alt="Partido de volleyball">
-    <div class="card-body">
-      <h5 class="card-title">{{ card.titulo }}</h5>
-      <p class="card-text">{{ card.descripcion }}</p>
-      <a [routerLink]="['/sala', card.id_sala]" class="btn unirse btn-primary">
-        Sumarse
-        <p class="vacantes">{{ card.vacantes }}</p>
-      </a>
+    <div class="col-md-4 mb-5" *ngFor="let card of cards">
+      <div class="main-card card">
+        <img [src]="card.imagen" class="card-img-top" alt="Partido de volleyball">
+        <div class="card-body">
+          <h5 class="card-title">{{ card.titulo }}</h5>
+          <p class="card-text">{{ card.descripcion }}</p>
+          <a [routerLink]="['/sala', card.id_sala]" class="btn unirse btn-primary" (click)="unirseASala($event, card.id_sala)">
+            Sumarse
+            <p class="vacantes">{{ card.vacantes }}</p>
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
 
     <!-- Mensaje cuando no hay salas -->
     <div *ngIf="!isLoading && !error && salas.length === 0" class="col-12 text-center py-5">

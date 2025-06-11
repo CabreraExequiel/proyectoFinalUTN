@@ -47,9 +47,31 @@ export class UsuarioService {
     );
   }
 
-  logout(): void {
+  async logout(): Promise<void> {
+  try {
+    // Realizar la petición de cierre de sesión al backend
+    await fetch('http://localhost:8080/usuario/cerrar_sesion', {
+      method: 'POST',
+      credentials: 'include', 
+      headers: {
+        'Authorization': localStorage.getItem('token') || '',
+        'Content-Type': 'application/json'
+      }
+    });
+
+    // Limpiar el almacenamiento local independientemente del resultado
     localStorage.removeItem('token');
+    localStorage.removeItem('nombreUsuario');
+    
+    // Opcional: redirigir al usuario a la página de inicio o login
+    // window.location.href = '/login';
+    
+  } catch (error) {
+    console.error('Error al cerrar sesión:', error);
+    localStorage.removeItem('token');
+    localStorage.removeItem('nombreUsuario');
   }
+}
 
   getToken(): string | null {
     return localStorage.getItem('token');

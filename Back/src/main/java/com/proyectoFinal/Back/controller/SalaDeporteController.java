@@ -2,11 +2,16 @@ package com.proyectoFinal.Back.controller;
 
 import java.util.List;
 
-import com.proyectoFinal.Back.entity.SalaReunion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.proyectoFinal.Back.Token.JwtUtil;
 import com.proyectoFinal.Back.entity.SalaDeporte;
@@ -63,10 +68,12 @@ public class SalaDeporteController {
     }
 
     @PostMapping("/sala/deporte/unirse")
-    public ResponseEntity<String> unirseSalaDeporte(@RequestParam("id_2") Long idSala, @RequestParam("id_3") Long idUsuario) {
-
+    public void unirseSalaDeporte(@RequestParam("idSala") Long idSala,@RequestHeader("Authorization") String token, HttpSession session) {
+        if (!validarToken(token)) {
+            throw new RuntimeException("Token inválido"); // Lanza una excepción si el token no es válido
+        }
+        Long idUsuario = ((Usuario) session.getAttribute("usuario")).getId(); 
         salaDeporteService.unirseSalaDeporte(idSala, idUsuario); // Llama al servicio para unirse a la sala de deporte
-        return ResponseEntity.ok("Unido a la sala de deporte correctamente");
     }
 
 }
