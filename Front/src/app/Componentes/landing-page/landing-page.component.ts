@@ -28,6 +28,11 @@ export class LandingPageComponent {
   
   
   ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.router.navigate(['/home']);
+      return;
+    }
     this.obtenerUsuarios();
   }
 

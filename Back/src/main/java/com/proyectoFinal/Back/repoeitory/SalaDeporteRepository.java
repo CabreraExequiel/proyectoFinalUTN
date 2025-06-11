@@ -1,5 +1,6 @@
 package com.proyectoFinal.Back.repoeitory;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,9 @@ public interface SalaDeporteRepository extends JpaRepository<SalaDeporte, Long> 
     @Query("SELECT s FROM SalaDeporte s WHERE s.id = ?1")
     Optional<SalaDeporte> findById(Long id);
 
+    @Query("SELECT s FROM SalaDeporte s WHERE :id NOT MEMBER OF s.id_integrantes")
+    List<SalaDeporte> findSalasWhereUsuarioNotIntegrante(Long id);
+
+    @Query("SELECT s FROM SalaDeporte s WHERE :id MEMBER OF s.id_integrantes")
+    List<SalaDeporte> findSalasWhereUsuarioIntegrante(Long id);
 }

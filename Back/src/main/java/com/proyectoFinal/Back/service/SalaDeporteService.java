@@ -18,9 +18,10 @@ public class SalaDeporteService implements ISalaDeporteService {
     private SalaDeporteRepository salaDeporteRepository;
 
     @Override
-    public List<SalaDeporte> verSalasDeporte() {
-        return salaDeporteRepository.findAll();
+    public List<SalaDeporte> verSalasDeporte(Long id) {
+        return salaDeporteRepository.findSalasWhereUsuarioNotIntegrante(id);
     }
+
 
     @Override
     public List<SalaDeporte> crearSalaDeporte(SalaDeporte salaDeporte, Long id_usuario) {
@@ -80,6 +81,16 @@ public class SalaDeporteService implements ISalaDeporteService {
                 Math.max(0, salaDeporte.getCantidad_integrantes() - 1) // Evita números negativos
             );
         }
+    }
+
+
+    @Override
+    public List<SalaDeporte> verSalasIntegradas(Long id) {
+        List<SalaDeporte> salasIntegradas = salaDeporteRepository.findSalasWhereUsuarioIntegrante(id);
+        if (salasIntegradas == null) {
+            return new ArrayList<>(); // Retorna una lista vacía si no hay salas integradas
+        }
+        return salasIntegradas; // Retorna la lista de salas donde el usuario es integrante
     }
     
 }
