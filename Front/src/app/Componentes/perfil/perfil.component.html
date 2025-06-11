@@ -1,10 +1,7 @@
 <div class="center">
-  <!-- Imagen de fondo -->
-  <img class="fondo_perfil" src="https://images.unsplash.com/photo-1697946979172-fbeb94bf57b0?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmF0dXJlJTIwcGFya3xlbnwwfHwwfHx8MA%3D%3D" alt="">
+  <div class="fondo_perfil"></div>
 
   <div class="perfil-container" *ngIf="usuario">
-
-    <!-- Portada -->
     <div class="portada">
       <label for="portadaInput">
         <img [src]="imagenPortadaCargada" alt="Imagen de portada" style="cursor: pointer;" />
@@ -13,16 +10,13 @@
     </div>
 
     <div class="perfil-info">
-      <!-- Foto de perfil -->
       <label for="perfilInput">
         <img class="foto-perfil" [src]="imagenPerfilCargada" alt="Foto de perfil" style="cursor: pointer;" />
       </label>
       <input type="file" (change)="subirImagen($event, 'perfil')" id="perfilInput" style="display: none;">
 
-      <!-- Nombre -->
       <h2>{{ usuario.nombre }} {{ usuario.apellido }}</h2>
 
-      <!-- Descripción -->
       <div *ngIf="!editarDescripcion">
         <p *ngIf="usuario.descripcion_usuario && usuario.descripcion_usuario.trim().length > 0" class="bio">
           {{ usuario.descripcion_usuario }}
@@ -35,16 +29,25 @@
                 (click)="activarEdicion()">Editar descripción</button>
       </div>
 
-      <!-- Campo editable -->
       <div *ngIf="editarDescripcion">
         <textarea [(ngModel)]="nuevaDescripcion" rows="4" placeholder="Agrega una descripción"></textarea>
         <button (click)="guardarDescripcion()">Guardar descripción</button>
         <button (click)="cancelarEdicion()">Cancelar</button>
       </div>
 
-      <!-- Botón de navegación -->
       <div class="acciones">
         <button><a href="http://localhost:4200/home/inicio">Inicio</a></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="salas" *ngIf="salas && salas.length > 0">
+    <div class="sala-card" *ngFor="let sala of salas">
+      <div class="sala-info">
+        <h3 class="sala-nombre">{{ sala.nombre_sala }}</h3>
+        <span class="sala-deporte">🏅 {{ sala.deporte }}</span>
+        <p class="sala-descripcion">{{ sala.descripcion }}</p>
+        <button (click)="irASala(sala.id_sala)">Ir a la sala</button>
       </div>
     </div>
   </div>

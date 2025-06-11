@@ -18,6 +18,14 @@ correo: string = '';
 
   constructor(private usuarioService: UsuarioService, private router: Router) {}
 
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.router.navigate(['/home']);
+      return;
+    }
+  }
+
   onLogin() {
   this.usuarioService.login(this.correo, this.password).subscribe({
     next: (response) => {

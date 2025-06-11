@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 interface UsuarioInfo {
   nombre: string;
@@ -11,6 +12,13 @@ interface UsuarioInfo {
   descripcion_usuario: string;
   imagen_perfil: string;
   imagen_portada: string;
+}
+
+interface SalaDeporte {
+  id_sala: number;
+  nombre_sala: string;
+  descripcion: string;
+  deporte: string;
 }
 
 @Component({
@@ -28,20 +36,29 @@ export class PerfilComponent implements OnInit {
   editarDescripcion = false;
   nuevaDescripcion = '';
 
+  salas: SalaDeporte[] = [];
+
   constructor(
     private http: HttpClient,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.cargarUsuario();
     this.cargarImagenPerfil();
     this.cargarImagenPortada();
+    this.cargarSalas();
   }
 
   cargarUsuario() {
     const token = localStorage.getItem('token');
-
     this.http.get<UsuarioInfo>('http://localhost:8080/custom/usuario/info', {
       headers: {
         'Accept': 'application/json',
@@ -49,14 +66,30 @@ export class PerfilComponent implements OnInit {
       },
       withCredentials: true
     }).subscribe({
-      next: data => {
-        this.usuario = data;
-      },
+      next: data => this.usuario = data,
       error: err => console.error('Error al cargar info de usuario', err)
     });
   }
 
-    cargarImagenPerfil() {
+  cargarSalas() {
+    const token = localStorage.getItem('token');
+    this.http.get<SalaDeporte[]>('http://localhost:8080/sala/perfil/mostrar', {
+      headers: {
+        'Authorization': token ?? '',
+        'Accept': 'application/json'
+      },
+      withCredentials: true
+    }).subscribe({
+      next: data => this.salas = data,
+      error: err => console.error('Error al cargar salas desde /sala/perfil/mostrar', err)
+    });
+  }
+
+  irASala(id_sala: number) {
+    this.router.navigate([`/sala/${id_sala}`]);
+  }
+
+  cargarImagenPerfil() {
     const token = localStorage.getItem('token');
     if (!token) return;
 
@@ -100,13 +133,9 @@ export class PerfilComponent implements OnInit {
 
   private limpiarYConvertirRuta(ruta: string | null): string | null {
     if (!ruta || typeof ruta !== 'string') return null;
-
-    // Elimina posibles comillas, espacios, caracteres invisibles
     const limpia = ruta.trim().replace(/^"|"$/g, '').replace(/\\/g, '/');
-
     const nombreArchivo = limpia.split('/').pop();
     if (!nombreArchivo || nombreArchivo.trim() === '') return null;
-
     return `http://localhost:8080/uploads/${nombreArchivo}`;
   }
 
@@ -172,26 +201,15 @@ export class PerfilComponent implements OnInit {
 
     const archivo = input.files[0];
     const formData = new FormData();
-
-    if (tipo === 'perfil') {
-      formData.append('imagen_perfil', archivo);
-    } else {
-      formData.append('imagen_portada', archivo);
-    }
+    formData.append(tipo === 'perfil' ? 'imagen_perfil' : 'imagen_portada', archivo);
 
     this.http.put('http://localhost:8080/custom/usuario/editar', formData, {
-      headers: {
-        'Authorization': token
-      },
+      headers: { 'Authorization': token },
       withCredentials: true
     }).subscribe({
       next: () => {
         alert(`${tipo === 'perfil' ? 'Foto de perfil' : 'Portada'} actualizada correctamente.`);
-        if (tipo === 'perfil') {
-          this.cargarImagenPerfil();
-        } else {
-          this.cargarImagenPortada();
-        }
+        tipo === 'perfil' ? this.cargarImagenPerfil() : this.cargarImagenPortada();
       },
       error: err => {
         console.error(`Error al actualizar la imagen de ${tipo}`, err);

@@ -33,6 +33,14 @@ export class BasketballComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     await this.loadBasketballRooms();
   }
 

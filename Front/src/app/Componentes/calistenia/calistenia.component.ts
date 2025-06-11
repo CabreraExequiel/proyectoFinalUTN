@@ -33,6 +33,14 @@ export class CalisteniaComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+
     try {
       const response = await lastValueFrom(
         this.http.get<Sala[]>('http://localhost:8080/sala/deporte/mostrar',

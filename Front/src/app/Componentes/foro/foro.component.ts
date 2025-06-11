@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService, Post } from '../../Servicios/service.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-foro',
@@ -17,10 +18,18 @@ export class ForoComponent implements OnInit {
     contenido: ''
   };
 
-  constructor(private usuarioService: UsuarioService) {}
+  constructor(
+    private usuarioService: UsuarioService
+    , private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.cargarPosts();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
   }
 
   cargarPosts(): void {

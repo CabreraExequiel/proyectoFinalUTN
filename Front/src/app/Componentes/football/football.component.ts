@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule,Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 
@@ -27,12 +27,17 @@ export class FootballComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+    , private router: Router
+  ) {}
 
+  
   async ngOnInit() {
     const token = localStorage.getItem('token');
     if (!token) {
       this.error = 'Debes iniciar sesión para ver las salas de fútbol';
+      this.router.navigate(['/login']);
       this.isLoading = false;
       return;
     }

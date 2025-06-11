@@ -13,6 +13,13 @@ import { UsuarioService } from '../../Servicios/service.service';
 })
 export class HomeComponent {
    constructor(private usuarioService: UsuarioService, private router: Router) {}
+
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.router.navigate(['/login']);
+    }
+  }
   logout() {
     this.usuarioService.logout(); // Elimina el token
     this.router.navigate(['/login']); // Redirige al login

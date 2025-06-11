@@ -6,6 +6,7 @@ import { WeatherService } from '../../Servicios/WeatherService';
 import { NoticiasService } from '../../Servicios/noticias.service';
 import { ChatComponent } from "../../componentes-reutilizables/chat/chat.component";
 import { ForoComponent } from "../foro/foro.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-inicio',
@@ -26,7 +27,8 @@ export class InicioComponent implements OnInit {
 
   constructor(
     private weatherService: WeatherService, 
-    private noticiasService: NoticiasService
+    private noticiasService: NoticiasService,
+    private router: Router
   ) {}
 
   scrollNoticias(direction: number) {
@@ -36,7 +38,12 @@ export class InicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  // Obtener clima actual
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+  
   this.weatherService.getWeather('Concordia,AR').subscribe({
     next: (data) => {
       this.clima = data;
