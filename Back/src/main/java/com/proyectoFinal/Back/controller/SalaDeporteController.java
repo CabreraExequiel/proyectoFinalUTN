@@ -5,13 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.proyectoFinal.Back.Token.JwtUtil;
 import com.proyectoFinal.Back.entity.SalaDeporte;
@@ -59,7 +53,19 @@ public class SalaDeporteController {
     return ResponseEntity.ok(salasIntegradas); // Retorna la lista al frontend
 }
 
+    @GetMapping("/sala/deporte/{id}")
+    public ResponseEntity<SalaDeporte> getSalaDeportePorId(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+        if (!validarToken(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
+        SalaDeporte sala = salaDeporteService.buscarSalaPorId(id);
+        if (sala == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(sala);
+    }
 
     @GetMapping("/sala/deporte/mostrar")
     public ResponseEntity<List<SalaDeporte>> registerUser(@RequestHeader("Authorization") String token, HttpSession session) {

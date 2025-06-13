@@ -11,4 +11,6 @@ public interface ISalaDeporteService {
     public void unirseSalaDeporte(Long idSala, Long idUsuario);
     public void salirSalaDeporte(Long idSala, Long idUsuario);
     public List<SalaDeporte> verSalasIntegradas(Long id);
+
+    SalaDeporte buscarSalaPorId(Long id);
 }
