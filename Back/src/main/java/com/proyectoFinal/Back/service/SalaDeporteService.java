@@ -69,6 +69,10 @@ public class SalaDeporteService implements ISalaDeporteService {
         // Si el usuario ya estaba, no se ejecuta save()
     }
 
+    public SalaDeporte buscarSalaPorId(Long id) {
+        return salaDeporteRepository.findById(id).orElse(null);
+    }
+
     @Override
     @Transactional  
     public void salirSalaDeporte(Long idSala, Long idUsuario) {

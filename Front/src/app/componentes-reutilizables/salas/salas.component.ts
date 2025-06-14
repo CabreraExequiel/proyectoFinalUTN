@@ -30,7 +30,7 @@ export class SalasComponent implements OnInit {
       console.log('ID:', id);
 
       if (id) {
-        this.http.get(`http://localhost:8080/sala_reunion/${id}`, {
+        this.http.get(`http://localhost:8080/sala/deporte/${id}`, {
           headers: {
             'Authorization': `${localStorage.getItem('token')}`
           },

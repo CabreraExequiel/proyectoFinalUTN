@@ -11,11 +11,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SalaDeporte {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,20 +42,5 @@ public class SalaDeporte {
     @Column(name = "usuario_id")
     private List<Long> id_integrantes = new ArrayList<>();
 
-    // Tus constructores aquí...
-    private SalaDeporte(){}
 
-    public SalaDeporte(Long id_sala, String nombre_sala, String deporte, String descripcion, 
-                     int cantidad_integrantes, int limite_integrantes, String ubicacion,
-                     List<Long> id_integrantes, Long id_creador) {
-        this.id_sala = id_sala;
-        this.nombre_sala = nombre_sala;
-        this.deporte = deporte;
-        this.descripcion = descripcion;
-        this.cantidad_integrantes = cantidad_integrantes;
-        this.limite_integrantes = limite_integrantes;
-        this.ubicacion = ubicacion;
-        this.id_integrantes = id_integrantes != null ? id_integrantes : new ArrayList<>();
-        this.id_creador = id_creador;
-    }
 }

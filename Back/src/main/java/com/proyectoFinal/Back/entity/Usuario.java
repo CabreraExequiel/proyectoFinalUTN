@@ -5,11 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Usuario {
 
         @Id
@@ -24,18 +28,7 @@ public class Usuario {
         private String password;
 
 
-        private Usuario(){}
 
-        private Usuario(Long id, String nombre, String apellido, String correo, String password, String descripcion_usuario, String imagen_perfil, String imagen_portada) {
-            this.id = id;
-            this.nombre = nombre;
-            this.apellido = apellido;
-            this.correo = correo;
-            this.password = password;
-            this.descripcion_usuario = descripcion_usuario;
-            this.imagen_perfil = imagen_perfil;
-            this.imagen_portada = imagen_portada;
-        }
         
     }
 

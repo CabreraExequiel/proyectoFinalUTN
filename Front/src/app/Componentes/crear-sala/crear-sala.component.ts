@@ -78,30 +78,11 @@ export class CrearSalaComponent {
     );
     console.log('Sala deporte creada:', responseSalaDeporte);
 
-    const payloadSalaReunion = {
-  nombreSala: this.salaForm.value.nombre,
-  descripcion: this.salaForm.value.descripcion,
-  ubicacion: this.salaForm.value.lugar,
-  deporte: this.salaForm.value.tipo,
-  limiteIntegrantes: this.salaForm.value.limite,
-  latitud: this.salaForm.value.latitud,     // <-- agregado
-  longitud: this.salaForm.value.longitud,   // <-- agregado
-  salaDeporteId: responseSalaDeporte.id_sala  // Ajusta según la respuesta real
-};
 
-
-    const responseSalaReunion: any = await lastValueFrom(
-      this.http.post('http://localhost:8080/create', payloadSalaReunion, {
-        headers: { 'Authorization': `${localStorage.getItem('token')}` },
-        withCredentials: true
-      })
-    );
-    console.log('Sala reunión creada:', responseSalaReunion);
-
-    const idSalaCreada = responseSalaReunion.id || responseSalaReunion.idSala || responseSalaReunion.salaReunionId;
+    const idSalaCreada = responseSalaDeporte.id || responseSalaDeporte.idSala || responseSalaDeporte.salaReunionId;
 
     if (idSalaCreada) {
-      this.router.navigate(['/sala', idSalaCreada]);
+      this.router.navigate(['/sala']);
     } else {
       // fallback en caso que no venga el id
       this.router.navigate(['/home']);
