@@ -26,9 +26,6 @@ public class Usuario {
         private String imagen_perfil;
         private String imagen_portada;
         private String password;
-
-
-
         
     }
 

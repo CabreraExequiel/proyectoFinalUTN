@@ -2,6 +2,7 @@ package com.proyectoFinal.Back.service;
 
 import java.util.List;
 
+import com.proyectoFinal.Back.EntidadesPersonalizadas.DataSala;
 import com.proyectoFinal.Back.entity.SalaDeporte;
 
 public interface ISalaDeporteService {
@@ -11,6 +12,5 @@ public interface ISalaDeporteService {
     public void unirseSalaDeporte(Long idSala, Long idUsuario);
     public void salirSalaDeporte(Long idSala, Long idUsuario);
     public List<SalaDeporte> verSalasIntegradas(Long id);
-
-    SalaDeporte buscarSalaPorId(Long id);
+    public DataSala buscarSalaPorId(Long id, Long idUsuario);
 }

@@ -1,39 +1,53 @@
-<div *ngIf="salaSeleccionada && !salaSeleccionada.error">
-  <h2>{{ salaSeleccionada.nombreSala }}</h2>
-  
-  <p><strong>Deporte:</strong> {{ salaSeleccionada.deporte }}</p>
-  <p><strong>Descripción:</strong> {{ salaSeleccionada.descripcion }}</p>
-  <p><strong>Ubicación:</strong> {{ salaSeleccionada.ubicacion }}</p>
-  <p><strong>Horario:</strong> {{ salaSeleccionada.horario | date:'short' }}</p>
+<div *ngIf="salaDeporte && !salaDeporte.error">
+  <h2>{{ salaDeporte.nombre_sala }}</h2>
+
+  <p><strong>Deporte:</strong> {{ salaDeporte.deporte }}</p>
+  <p><strong>Descripción:</strong> {{ salaDeporte.descripcion }}</p>
+  <p><strong>Ubicación:</strong> {{ salaDeporte.ubicacion }}</p>
+  <p><strong>Horario:</strong> {{ salaDeporte.horario_sala }}</p>
 
   <!-- Google Maps -->
   <iframe
-  *ngIf="mapaUrl"
-  width="100%"
-  height="300"
-  frameborder="0"
-  style="border:0"
-  [src]="mapaUrl"
-  allowfullscreen>
-</iframe>
+    *ngIf="mapaUrl"
+    width="100%"
+    height="300"
+    frameborder="0"
+    style="border:0"
+    [src]="mapaUrl"
+    allowfullscreen>
+  </iframe>
 
-
-
-
-  <!-- Lista de usuarios -->
+  <!-- Lista de integrantes -->
   <h3>Integrantes</h3>
-<ul>
-  <li *ngFor="let usuario of salaSeleccionada.usuariosIngresados">
-    {{ usuario.nombre }} {{ usuario.apellido }} ({{ usuario.correo }})
-  </li>
-</ul>
-
+  <ul>
+    <li *ngFor="let integrante of integrantes">
+      {{ integrante }}
+    </li>
+  </ul>
 
   <!-- Chat -->
   <app-chat></app-chat>
+
+  <!-- Botón de acción según si es creador o no -->
+<div style="margin-top: 20px;">
+  <button 
+    *ngIf="esCreador"
+    (click)="eliminarSala(salaDeporte.id_sala)"
+    style="background-color: red; color: white; padding: 10px 20px; border: none; border-radius: 5px;">
+    Eliminar grupo
+  </button>
+
+  <button 
+    *ngIf="!esCreador"
+    (click)="salirDelGrupo(salaDeporte.id_sala)"
+    style="background-color: red; color: white; padding: 10px 20px; border: none; border-radius: 5px;">
+    Salir del grupo
+  </button>
 </div>
 
-<div *ngIf="salaSeleccionada?.error">
-  <p style="color: red">{{ salaSeleccionada.error }}</p>
-  
+
+</div>
+
+<div *ngIf="salaDeporte?.error">
+  <p style="color: red">{{ salaDeporte.error }}</p>
 </div>

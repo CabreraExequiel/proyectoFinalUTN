@@ -64,8 +64,9 @@ export class CrearSalaComponent {
     descripcion: this.salaForm.value.descripcion,
     limite_integrantes: this.salaForm.value.limite,
     ubicacion: this.salaForm.value.lugar,
-    latitud: this.salaForm.value.latitud,     // <-- agregado
-    longitud: this.salaForm.value.longitud    // <-- agregado
+    latitud: this.salaForm.value.latitud,     
+    longitud: this.salaForm.value.longitud,
+    horario_sala: this.salaForm.value.horario   
   };
 
   try {
