@@ -5,8 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.proyectoFinal.Back.EntidadesPersonalizadas.DataSala;
 import com.proyectoFinal.Back.Token.JwtUtil;
 import com.proyectoFinal.Back.entity.SalaDeporte;
 import com.proyectoFinal.Back.entity.Usuario;
@@ -54,17 +62,12 @@ public class SalaDeporteController {
 }
 
     @GetMapping("/sala/deporte/{id}")
-    public ResponseEntity<SalaDeporte> getSalaDeportePorId(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<DataSala> getSalaDeportePorId(@PathVariable Long id, @RequestHeader("Authorization") String token, HttpSession session) {
         if (!validarToken(token)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-        SalaDeporte sala = salaDeporteService.buscarSalaPorId(id);
-        if (sala == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        return ResponseEntity.ok(sala);
+        Long idUsuario = ((Usuario) session.getAttribute("usuario")).getId();
+        return ResponseEntity.ok(salaDeporteService.buscarSalaPorId(id,idUsuario)); // Busca la sala de deporte por ID y retorna los datos personalizados
     }
 
     @GetMapping("/sala/deporte/mostrar")
@@ -95,6 +98,16 @@ public class SalaDeporteController {
 
         salaDeporteService.eliminarSalaDeporte(id);
         return ResponseEntity.ok("Sala de deporte eliminada correctamente");
+    }
+
+    @PostMapping("/sala/deporte/salir_grupo")
+    public ResponseEntity<String> salirSalaDeporte(@RequestParam("id") Long idSala, @RequestHeader("Authorization") String token, HttpSession session) {
+        if (!validarToken(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        Long idUsuario = ((Usuario) session.getAttribute("usuario")).getId(); 
+        salaDeporteService.salirSalaDeporte(idSala, idUsuario);
+        return ResponseEntity.ok("Has salido de la sala de deporte correctamente");
     }
 
     @PostMapping("/sala/deporte/unirse")

@@ -6,8 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.proyectoFinal.Back.EntidadesPersonalizadas.DataSala;
 import com.proyectoFinal.Back.entity.SalaDeporte;
+import com.proyectoFinal.Back.entity.Usuario;
 import com.proyectoFinal.Back.repoeitory.SalaDeporteRepository;
+import com.proyectoFinal.Back.repoeitory.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -16,6 +19,9 @@ public class SalaDeporteService implements ISalaDeporteService {
 
     @Autowired
     private SalaDeporteRepository salaDeporteRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Override
     public List<SalaDeporte> verSalasDeporte(Long id) {
@@ -69,9 +75,33 @@ public class SalaDeporteService implements ISalaDeporteService {
         // Si el usuario ya estaba, no se ejecuta save()
     }
 
-    public SalaDeporte buscarSalaPorId(Long id) {
-        return salaDeporteRepository.findById(id).orElse(null);
+    public DataSala buscarSalaPorId(Long id, Long idUsuario) {
+    SalaDeporte sala = salaDeporteRepository.findById(id).orElse(null);
+    if (sala == null) {
+        return null;
     }
+    List<Long> idsIntegrantes = sala.getId_integrantes();
+    List<Usuario> usuarios = usuarioRepository.findByIdIn(idsIntegrantes);
+
+    // Convertir a nombres
+    String[] nombresIntegrantes = usuarios.stream()
+        .map(u -> u.getNombre() + " " + u.getApellido()) // o solo getNombre()
+        .toArray(String[]::new);
+
+    // Armar el objeto final
+    DataSala dataSala = new DataSala();
+
+    if(sala.getId_creador().equals(idUsuario)) {
+        dataSala.setEsCreador(true); // Verifica si el usuario es el creador de la sala
+    } else {
+        dataSala.setEsCreador(false);
+    }
+
+    dataSala.setSalaDeporte(sala);
+    dataSala.setIntegrantes(nombresIntegrantes);
+
+    return dataSala;
+}
 
     @Override
     @Transactional  

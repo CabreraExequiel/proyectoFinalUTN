@@ -33,6 +33,7 @@ public class SalaDeporte {
     private String ubicacion;
     private Double latitud;
     private Double longitud;
+    private String horario_sala;
     
     @ElementCollection
     @CollectionTable(
