@@ -60,8 +60,32 @@
 
   </div>
 </div>
+  <!-- Sección Salas Recomendadas -->
+<div class="d-flex justify-content-center mt-4">
+  <div class="bg-light shadow-lg rounded p-4 w-100" style="max-width: 100%;">
+    <h2 class="text-center mb-4">Salas que podrían interesarte...</h2>
 
-  <h1>HOLAA</h1>
+    <!-- ✅ Si no hay salas -->
+    <div *ngIf="salas.length === 0" class="text-center text-muted">
+      <h4 style="color: #888;">Sin recomendaciones a la vista</h4>
+    </div>
+
+    <!-- ✅ Si hay salas -->
+    <div *ngIf="salas.length > 0" class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col" *ngFor="let sala of salas">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ sala.nombre_sala }}</h5>
+            <p class="card-text">{{ sala.deporte }}</p>
+            <p class="card-text">{{ sala.descripcion }}</p>
+            <a (click)="unirseASala(sala.id_sala)" class="btn btn-primary">Unirse</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
   <!-- Sección Noticias -->
   <div>

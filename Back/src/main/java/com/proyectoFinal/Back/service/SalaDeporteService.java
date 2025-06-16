@@ -33,8 +33,11 @@ public class SalaDeporteService implements ISalaDeporteService {
     public List<SalaDeporte> crearSalaDeporte(SalaDeporte salaDeporte, Long id_usuario) {
         //***Configuramos al creador como primer integrante******
         List<Long> idIntegrantes = salaDeporte.getId_integrantes();
+        
+        
         idIntegrantes.add(id_usuario); // Por defecto, el usuario que crea la sala se agrega como integrante
         salaDeporte.setId_integrantes(idIntegrantes);
+        
         salaDeporte.setId_creador(id_usuario); // Establece el creador de la sala
         salaDeporte.setCantidad_integrantes(1); // Inicializamos la cantidad de integrantes a 1 (el creador)
         //********************************************************
@@ -62,12 +65,15 @@ public class SalaDeporteService implements ISalaDeporteService {
         // 2. Inicializar la lista de integrantes si es null (evita NullPointerException)
         if (sala.getId_integrantes() == null) {
             sala.setId_integrantes(new ArrayList<>());
+            
         }
+        
 
         // 3. Añadir usuario solo si no existe ya (evita duplicados)
         if (!sala.getId_integrantes().contains(idUsuario)) {
             sala.getId_integrantes().add(idUsuario);
             sala.setCantidad_integrantes(sala.getCantidad_integrantes() + 1);
+          
             
             // 4. Guardar explícitamente los cambios en la base de datos
             salaDeporteRepository.save(sala); 
