@@ -42,6 +42,4 @@ public class SalaDeporte {
     )
     @Column(name = "usuario_id")
     private List<Long> id_integrantes = new ArrayList<>();
-
-
 }
