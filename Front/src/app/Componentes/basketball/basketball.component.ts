@@ -85,9 +85,15 @@ export class BasketballComponent implements OnInit {
     return `A LAS ${hours}:${minutes} HS`;
   }
 
-  async unirseASala(event: Event, idSala: number) {
+  async unirseASala(event: Event, idSala: number, cantidadActual?: number, limite?: number) {
     event.preventDefault();
     event.stopPropagation();
+
+    // Validación de sala llena (si los datos están disponibles en el frontend)
+    if (typeof cantidadActual !== 'undefined' && typeof limite !== 'undefined' && cantidadActual >= limite) {
+      alert('Esta sala ya ha alcanzado su límite de participantes');
+      return;
+    }
 
     const token = localStorage.getItem('token');
     if (!token) {
@@ -97,8 +103,8 @@ export class BasketballComponent implements OnInit {
     }
 
     try {
-      await lastValueFrom(
-        this.http.post(
+      const response = await lastValueFrom(
+        this.http.post<{success: boolean, message?: string, sala?: any}>(
           `http://localhost:8080/sala/deporte/unirse?idSala=${idSala}`,
           {},
           {
@@ -109,8 +115,24 @@ export class BasketballComponent implements OnInit {
           }
         )
       );
-    } catch (err) {
+
+      if (response.success) {
+        // Actualizar la lista de salas o redirigir
+        this.router.navigate(['/sala', idSala]);
+      } else {
+        alert(response.message || 'No se pudo unir a la sala');
+      }
+    } catch (err: any) {
       console.error('Error al unirse a la sala:', err);
+      let errorMessage = 'Error al unirse a la sala';
+      
+      if (err.error && err.error.message) {
+        errorMessage = err.error.message;
+      } else if (err.status === 403) {
+        errorMessage = 'La sala está llena o no tienes permiso para unirte';
+      }
+      
+      alert(errorMessage);
     }
   }
 }

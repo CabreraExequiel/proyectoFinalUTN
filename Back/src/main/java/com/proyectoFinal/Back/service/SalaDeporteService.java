@@ -69,21 +69,22 @@ public class SalaDeporteService implements ISalaDeporteService {
         }
         
 
-        // 3. Añadir usuario solo si no existe ya (evita duplicados)
-        if (!sala.getId_integrantes().contains(idUsuario)) {
-            sala.getId_integrantes().add(idUsuario);
-            sala.setCantidad_integrantes(sala.getCantidad_integrantes() + 1);
-          
-            
-            // 4. Guardar explícitamente los cambios en la base de datos
-            salaDeporteRepository.save(sala); 
-        }
-        // Si el usuario ya estaba, no se ejecuta save()
+         if (!sala.getId_integrantes().contains(idUsuario)) {
+                if(sala.getCantidad_integrantes() < sala.getLimite_integrantes()) {
+                    sala.getId_integrantes().add(idUsuario);
+                    sala.setCantidad_integrantes(sala.getCantidad_integrantes() + 1);
+                    salaDeporteRepository.save(sala); 
+                }
+            }
     }
 
     public DataSala buscarSalaPorId(Long id, Long idUsuario) {
     SalaDeporte sala = salaDeporteRepository.findById(id).orElse(null);
     if (sala == null) {
+        return null;
+    }
+    if(!salaDeporteRepository.esIntegrante(id,idUsuario))
+    {
         return null;
     }
     List<Long> idsIntegrantes = sala.getId_integrantes();
