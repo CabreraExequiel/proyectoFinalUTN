@@ -4,8 +4,8 @@
     <a class="navbar-brand" href="#">ShareTeam</a>
 
     <!-- Botón para colapsar el sidebar -->
-    <button class="btn btn-outline-light me-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
-      ☰
+    <button id="sidebarToggleBtn" class="btn btn-outline-light me-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu">
+    ☰
     </button>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -58,7 +58,32 @@
   </div>
 
   <!-- Contenido principal -->
-  <div class="p-4 flex-grow-1">
+  <div class="p-4 flex-grow-1 fondo">
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<script>
+  let colapsado = false;
+
+  function controlarSidebar() {
+    const anchoPantalla = window.innerWidth;
+    const boton = document.getElementById('sidebarToggleBtn');
+    const sidebar = document.getElementById('sidebarMenu');
+
+    const estaVisible = sidebar.classList.contains('show');
+
+    if (anchoPantalla < 1570 && estaVisible && !colapsado) {
+      boton.click(); // colapsar
+      colapsado = true;
+    }
+
+    if (anchoPantalla >= 1570 && !estaVisible && colapsado) {
+      boton.click(); // expandir
+      colapsado = false;
+    }
+  }
+
+  window.addEventListener('load', controlarSidebar);
+  window.addEventListener('resize', controlarSidebar);
+</script>
