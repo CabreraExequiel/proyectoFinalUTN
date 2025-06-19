@@ -8,17 +8,18 @@ body{
 .salas {
   height: 50%;
   overflow-y: auto;
-  width: 100%;
+  width: 60%;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  background-color: #121212;
+  background-color: #12121200;
   border-radius: 2rem;
 }
 
 .sala-card {
-  background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+  border: 2px solid white;
+  background-color: #12121296;
   border-radius: 1.5rem;
   padding: 1.5rem;
   color: white;
@@ -28,7 +29,7 @@ body{
 
 .sala-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0);
 }
 
 .sala-info {
@@ -179,4 +180,8 @@ background-color: #121212;
   width: 20px;
   background-color: black;
   z-index: 5;
+}
+.bio{
+  font-size: 15px;
+  color: black;
 }
