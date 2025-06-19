@@ -30,6 +30,10 @@ export class ForoComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
+    const nombreUsuario = localStorage.getItem('nombreUsuario');
+  if (nombreUsuario) {
+    this.nuevoPost.autor = nombreUsuario;
+  }
   }
 
   cargarPosts(): void {
@@ -40,14 +44,15 @@ export class ForoComponent implements OnInit {
   }
 
   crearPost(): void {
-    if (!this.nuevoPost.autor || !this.nuevoPost.contenido) return;
+  if (!this.nuevoPost.autor || !this.nuevoPost.contenido) return;
 
-    this.usuarioService.crearPost(this.nuevoPost).subscribe({
-      next: (post) => {
-        this.posts.unshift(post);  // Agregar al inicio de la lista
-        this.nuevoPost = { autor: '', contenido: '' };  // Limpiar el formulario
-      },
-      error: (err) => console.error('Error al crear post', err)
-    });
-  }
+  this.usuarioService.crearPost(this.nuevoPost).subscribe({
+    next: (post) => {
+      this.posts.unshift(post);
+      this.nuevoPost.contenido = ''; // 👈 Solo se borra el contenido
+    },
+    error: (err) => console.error('Error al crear post', err)
+  });
+}
+
 }

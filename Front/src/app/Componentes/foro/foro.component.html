@@ -1,31 +1,48 @@
 <div class="container mt-4">
-  <h2>📝 Foro de la comunidad</h2>
+  <h2 class="mb-4">📝 Foro de la comunidad</h2>
 
   <!-- Formulario para crear nuevo post -->
-  <form (ngSubmit)="crearPost()" #postForm="ngForm" class="mb-4">
-    <div class="mb-3">
-      <label for="autor" class="form-label">Autor</label>
-      <input type="text" id="autor" class="form-control" required [(ngModel)]="nuevoPost.autor" name="autor" />
+  <form (ngSubmit)="crearPost()" #postForm="ngForm" class="card p-3 mb-4 shadow-sm">
+    <div class="d-flex align-items-center mb-3">
+      <img src="https://ui-avatars.com/api/?name={{nuevoPost.autor}}&background=0D8ABC&color=fff&rounded=true&size=40" 
+           class="rounded-circle me-2" alt="avatar">
+      <p class="mb-0"><strong>{{ nuevoPost.autor }}</strong></p>
     </div>
     <div class="mb-3">
-      <label for="contenido" class="form-label">Contenido</label>
-      <textarea id="contenido" class="form-control" rows="3" required [(ngModel)]="nuevoPost.contenido" name="contenido"></textarea>
+      <textarea
+        id="contenido"
+        class="form-control"
+        rows="3"
+        required
+        [(ngModel)]="nuevoPost.contenido"
+        name="contenido"
+        placeholder="¿Qué estás pensando?"
+      ></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Publicar</button>
+    <div class="text-end">
+      <button type="submit" class="btn btn-primary px-4">Publicar</button>
+    </div>
   </form>
 
   <!-- Lista de posts -->
   <div *ngIf="posts.length; else noPosts">
-    <div *ngFor="let post of posts" class="card mb-3">
+    <div *ngFor="let post of posts" class="card mb-3 shadow-sm">
       <div class="card-body">
-        <h5 class="card-title">{{ post.autor }}</h5>
-        <p class="card-text">{{ post.contenido }}</p>
-        <p class="card-text"><small class="text-muted">{{ post.fechaPublicacion | date:'short' }}</small></p>
+        <div class="d-flex align-items-center mb-2">
+          <img src="https://ui-avatars.com/api/?name={{post.autor}}&background=random&color=fff&rounded=true&size=40" 
+               class="rounded-circle me-2" alt="avatar">
+          <div>
+            <h6 class="mb-0">{{ post.autor }}</h6>
+            <small class="text-muted">{{ post.fechaPublicacion | date:'short' }}</small>
+          </div>
+        </div>
+        <p class="card-text mt-2">{{ post.contenido }}</p>
       </div>
     </div>
   </div>
+  
 
   <ng-template #noPosts>
-    <p>No hay publicaciones todavía. ¡Sé el primero en publicar!</p>
+    <p class="text-muted">No hay publicaciones todavía. ¡Sé el primero en publicar!</p>
   </ng-template>
 </div>
