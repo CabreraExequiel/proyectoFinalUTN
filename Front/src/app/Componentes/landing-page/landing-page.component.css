@@ -38,20 +38,21 @@
 }
 
 .left-section button {
-  background-color: red;
+  background-color: rgb(67, 216, 21);
   color: white;
   cursor: pointer;
 }
 
 .left-section a {
-  color: red;
+  color:rgb(102, 255, 55);
   text-decoration: none;
 }
 
 /* Sección derecha: Imagen y descripción */
 .right-section {
+  position: relative;
   flex: 1;
-  background-image: url('https://img.freepik.com/foto-gratis/corredores-entrenando-al-aire-libre_1098-3693.jpg?ga=GA1.1.1059346766.1745870724&semt=ais_hybrid&w=740'); /* Cambiá por el nombre real */
+  background-image: url('https://img.freepik.com/foto-gratis/corredores-entrenando-al-aire-libre_1098-3693.jpg?ga=GA1.1.1059346766.1745870724&semt=ais_hybrid&w=740');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -62,12 +63,54 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  backdrop-filter: brightness(0.5); /* oscurece un poco el fondo */
+  z-index: 1;
 }
 
+.right-section::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* shorthand para top, right, bottom, left: 0 */
+  background-color: rgba(0, 0, 0, 0.356); /* Acá ajustás la opacidad que quieras */
+  z-index: 0;
+}
+
+.right-section > * {
+  position: relative;
+  z-index: 2; /* Para que el contenido esté por encima del overlay */
+}
 
 .right-section img {
   width: 60%;
   max-width: 300px;
   margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.432); /* oscurece un poco el fondo */
+}
+@media (max-width: 768px) {
+  .right-section {
+    display: none;
+  }
+  
+  .left-section {
+    flex: 1 1 100%;
+    width: 100vw;
+
+    background-image: url('https://img.freepik.com/foto-gratis/corredores-entrenando-al-aire-libre_1098-3693.jpg?ga=GA1.1.1059346766.1745870724&semt=ais_hybrid&w=740');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+
+  .left-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Oscurece un poco para que se vea bien el texto */
+    z-index: 0;
+  }
+
+  .left-section > * {
+    position: relative;
+    z-index: 1; /* Para que el contenido esté por encima del fondo */
+  }
 }
