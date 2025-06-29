@@ -16,9 +16,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-/**
- * @author Mahesh
- */
+
 @Component
 
 public class JwtUtil {
@@ -34,16 +32,10 @@ public class JwtUtil {
     private final Logger log = LoggerFactory
             .getLogger(JwtUtil.class);
 
-    /**
-     * Create a new token.
-     *
-     * @param id
-     * @param subject
-     * @return
-     */
+
     public String create(String id, String subject,String usuario) {
 
-        // The JWT signature algorithm used to sign the token
+
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
         long nowMillis = System.currentTimeMillis();
@@ -67,12 +59,7 @@ public class JwtUtil {
         return builder.compact();
     }
 
-    /**
-     * Method to validate and read the JWT
-     *
-     * @param jwt
-     * @return
-     */
+
     public String getValue(String jwt) {
         // This line will throw an exception if it is not a signed JWS (as
         // expected)
@@ -82,12 +69,7 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
-    /**
-     * Method to validate and read the JWT
-     *
-     * @param jwt
-     * @return
-     */
+
     public String getKey(String jwt) {
         // This line will throw an exception if it is not a signed JWS (as
         // expected)

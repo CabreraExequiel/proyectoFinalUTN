@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatService, ChatMessage } from '../../Servicios/chat.service';
@@ -13,32 +14,39 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  @Input() idSala!: string;
+
   remitente = '';
   contenido = '';
   mensajes: ChatMessage[] = [];
   chatAbierto = false;
-    nombreUsuario: string = '';
-
+  nombreUsuario: string = '';
 
   private sub: Subscription = new Subscription();
 
   constructor(private chatService: ChatService, private http: HttpClient) {}
 
   ngOnInit() {
-  this.http.get<ChatMessage[]>('http://localhost:8080/historial').subscribe(historial => {
-    
-    this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Anónimo';
-    this.remitente = this.nombreUsuario;
-    this.chatService.subscribeToSala();
-    this.sub = this.chatService.messages$.subscribe((mensaje) => {
-      if (mensaje) {
-        this.mensajes.push(mensaje);
-        setTimeout(() => this.scrollToBottom(), 0);
-      }
-    });
-  });
-}
+    if (!this.idSala) {
+      console.error('Error: idSala es requerido para el chat');
+      return;
+    }
 
+    this.http.get<ChatMessage[]>(`http://localhost:8080/historial/${this.idSala}`).subscribe(historial => {
+      this.mensajes = historial;
+
+      this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Anónimo';
+      this.remitente = this.nombreUsuario;
+      this.chatService.subscribeToSala(this.idSala);
+
+      this.sub = this.chatService.messages$.subscribe((mensaje) => {
+        if (mensaje) {
+          this.mensajes.push(mensaje);
+          setTimeout(() => this.scrollToBottom(), 0);
+        }
+      });
+    });
+  }
 
   enviarMensaje() {
     if (!this.contenido || !this.remitente) return;
@@ -48,7 +56,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       contenido: this.contenido,
       timestamp: new Date().toISOString()
     };
-    this.chatService.sendMessage('general', mensaje);
+    this.chatService.sendMessage(this.idSala, mensaje);
     this.contenido = '';
   }
 
