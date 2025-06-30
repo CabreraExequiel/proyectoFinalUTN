@@ -49,28 +49,24 @@
   </div>
 </div>
 
-<!-- Latitud y Longitud -->
-<div class="row g-3 mb-4">
-  <div class="col-md-6">
-    <label for="latitud" class="form-label fw-semibold">Latitud</label>
-    <input type="number" step="any" class="form-control form-control-lg" id="latitud"
-           formControlName="latitud" placeholder="-34.6037">
-    <div *ngIf="salaForm.get('latitud')?.invalid && (salaForm.get('latitud')?.dirty || salaForm.get('latitud')?.touched)"
-         class="text-danger mt-1">
-      Ingrese una latitud válida
-    </div>
-  </div>
-  <div class="col-md-6">
-    <label for="longitud" class="form-label fw-semibold">Longitud</label>
-    <input type="number" step="any" class="form-control form-control-lg" id="longitud"
-           formControlName="longitud" placeholder="-58.3816">
-    <div *ngIf="salaForm.get('longitud')?.invalid && (salaForm.get('longitud')?.dirty || salaForm.get('longitud')?.touched)"
-         class="text-danger mt-1">
-      Ingrese una longitud válida
-    </div>
+<!-- Mapa interactivo -->
+<div class="mb-4">
+  <label class="form-label fw-semibold">Seleccioná la ubicación en el mapa</label>
+  <google-map
+    height="400px"
+    width="100%"
+    [center]="center"
+    [zoom]="14"
+    (mapClick)="onMapClick($event)">
+    <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
+  </google-map>
+
+  <div class="mt-2 text-muted">
+    <input type="text" id="latitud" value="{{ salaForm.get('latitud')?.value }}" hidden>
+    <input type="text" id="longitud" value="{{ salaForm.get('longitud')?.value }} " hidden>
+     
   </div>
 </div>
-
 
             <!-- Descripción y Límite -->
             <div class="row g-3 mb-4">

@@ -63,6 +63,7 @@ export class SalasComponent implements OnInit {
   }
 
   setMapaUrl(lat: number, lng: number) {
+    console.log('Coordenadas recibidas para el mapa:', lat, lng); // 👈
     const url = `https://www.google.com/maps?q=${lat},${lng}&output=embed`;
     this.mapaUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
