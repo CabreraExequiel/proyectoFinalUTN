@@ -12,18 +12,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // Punto de conexión para los clientes WebSocket
         registry.addEndpoint("/ws-chat")
                 .setAllowedOrigins("http://localhost:4200")
-                .withSockJS(); // Fallback para navegadores sin soporte WebSocket
+                .withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        // Los mensajes que el servidor envía a los clientes usarán el prefijo /topic
         config.enableSimpleBroker("/topic");
-
-        // Los mensajes que los clientes envían al servidor deben tener el prefijo /app
         config.setApplicationDestinationPrefixes("/app");
     }
 }

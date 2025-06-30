@@ -17,7 +17,6 @@ export class ChatService {
   private client: Client;
   private messagesSubject = new BehaviorSubject<ChatMessage | null>(null);
   public messages$: Observable<ChatMessage | null> = this.messagesSubject.asObservable();
-
   private subscription?: any;
 
   constructor() {

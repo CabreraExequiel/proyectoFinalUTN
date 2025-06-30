@@ -23,5 +23,5 @@ public class Chat {
     private String remitente;
     private String contenido;
     private LocalDateTime timestamp;
-    private String idSala;  // Agregado para identificar la sala
+    private String idSala;
 }

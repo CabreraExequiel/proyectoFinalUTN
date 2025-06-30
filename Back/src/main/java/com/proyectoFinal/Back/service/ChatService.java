@@ -19,11 +19,6 @@ public class ChatService implements IChatService {
     }
 
     @Override
-    public List<Chat> obtenerMensajes() {
-        return chatRepo.findAll();
-    }
-
-    @Override
     public List<Chat> obtenerMensajesPorSala(String idSala) {
         return chatRepo.findByIdSalaOrderByTimestampAsc(idSala);
     }

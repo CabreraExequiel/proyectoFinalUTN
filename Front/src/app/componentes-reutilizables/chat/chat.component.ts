@@ -15,7 +15,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ChatComponent implements OnInit, OnDestroy {
   @Input() idSala!: string;
-
   remitente = '';
   contenido = '';
   mensajes: ChatMessage[] = [];
@@ -34,11 +33,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     this.http.get<ChatMessage[]>(`http://localhost:8080/historial/${this.idSala}`).subscribe(historial => {
       this.mensajes = historial;
-
       this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Anónimo';
       this.remitente = this.nombreUsuario;
       this.chatService.subscribeToSala(this.idSala);
-
       this.sub = this.chatService.messages$.subscribe((mensaje) => {
         if (mensaje) {
           this.mensajes.push(mensaje);
@@ -50,7 +47,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   enviarMensaje() {
     if (!this.contenido || !this.remitente) return;
-
     const mensaje: ChatMessage = {
       remitente: this.remitente,
       contenido: this.contenido,
